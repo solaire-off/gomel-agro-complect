@@ -12,13 +12,17 @@ def UploadImageForItem(object,filename):
 
 
 class Item(models.Model):
-    title = models.CharField(max_length=200)
-    description = models.TextField()
-    catagory = models.ForeignKey('Category', null=True, on_delete=models.SET_NULL)
-    image = models.FileField(upload_to=UploadImageForItem, blank=True, null=True)
-    url = models.CharField(max_length=200)
-    publish = models.BooleanField(default=0)
-    created_date = models.DateTimeField(default=timezone.now)
+    title = models.CharField(max_length=200, verbose_name="Наименование")
+    description = models.TextField(verbose_name="Описание")
+    catagory = models.ForeignKey('Category', null=True, on_delete=models.SET_NULL, verbose_name="Категория")
+    image = models.FileField(upload_to=UploadImageForItem, blank=True, null=True,verbose_name="Изображение")
+    url = models.CharField(max_length=200, null=True, blank=True, verbose_name="Ссылка")
+    publish = models.BooleanField(default=1,verbose_name="Опубликовано")
+    created_date = models.DateTimeField(default=timezone.now, editable=False)
+
+    class Meta:
+        verbose_name = 'Продукт'
+        verbose_name_plural = 'Продукты'
 
     def publish(self):
         self.publish = True
@@ -34,9 +38,13 @@ class Item(models.Model):
 
 
 class Category(models.Model):
-    title = models.CharField(max_length=200)
-    description  = models.TextField()
-    created_date = models.DateTimeField(default=timezone.now)
+    title = models.CharField(max_length=200, verbose_name="Наименование")
+    description  = models.TextField(verbose_name="Описание")
+    created_date = models.DateTimeField(default=timezone.now, editable=False)
+
+    class Meta:
+        verbose_name = 'Категорию'
+        verbose_name_plural = 'Категории'
 
     def __str__(self):
         return self.title
