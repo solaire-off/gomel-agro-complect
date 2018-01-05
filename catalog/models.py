@@ -18,7 +18,7 @@ class Item(models.Model):
     image = models.FileField(upload_to=UploadImageForItem, blank=True, null=True,verbose_name="Изображение")
     url = models.CharField(max_length=200, null=True, blank=True, verbose_name="Ссылка")
     published = models.BooleanField(default=1,verbose_name="Опубликовано")
-    created_date = models.DateTimeField(default=timezone.now, editable=False, verbose_name="Дата создания")
+    created_date = models.DateTimeField(default=timezone.now, editable=False, verbose_name="Дата добавления")
 
     class Meta:
         verbose_name = 'Продукт'
@@ -40,11 +40,27 @@ class Item(models.Model):
 class Category(models.Model):
     title = models.CharField(max_length=200, verbose_name="Наименование")
     description  = models.TextField(verbose_name="Описание")
-    created_date = models.DateTimeField(default=timezone.now, editable=False, verbose_name="Дата создания")
+    published = models.BooleanField(default=1, verbose_name="Опубликовано")
+    created_date = models.DateTimeField(default=timezone.now, editable=False, verbose_name="Дата добавления")
 
     class Meta:
         verbose_name = 'Категорию'
         verbose_name_plural = 'Категории'
+
+    def __str__(self):
+        return self.title
+
+
+class Detail(models.Model):
+    title = models.CharField(max_length=200, verbose_name="Наименование")
+    description = models.TextField(verbose_name="Описание")
+    items = models.ManyToManyField("Item",verbose_name="Продукция")
+    published = models.BooleanField(default=1,verbose_name="Опубликовано")
+    created_date = models.DateTimeField(default=timezone.now, editable=False, verbose_name="Дата добавления")
+
+    class Meta:
+        verbose_name = "Запчасть"
+        verbose_name_plural = "Запчасти"
 
     def __str__(self):
         return self.title

@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Item, Category
+from .models import Item, Category, Detail
 
 
 class ItemAdmin(admin.ModelAdmin):
@@ -15,8 +15,15 @@ class CategoryAdmin(admin.ModelAdmin):
     list_filter = ('created_date',)
     search_fields = ['title','description']
 
+class DetailAdmin(admin.ModelAdmin):
+    models = Detail
+    list_display = ('title','description')
+    list_filter = ('items','created_date')
+    search_fields = ['title','description','items']
+
 admin.site.register(Item, ItemAdmin)
 admin.site.register(Category, CategoryAdmin)
+admin.site.register(Detail,DetailAdmin)
 
 admin.site.site_header = 'ОАО "Гомельагрокомплект"'
 admin.site.index_title = 'Панель администрации'
