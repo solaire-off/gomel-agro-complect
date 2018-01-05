@@ -1,6 +1,6 @@
 from django.contrib import admin
 from .models import Item, Category, Detail
-
+from .forms import ItemAdminForm, CategoryAdminForm, DetailAdminForm
 
 class ItemAdmin(admin.ModelAdmin):
     models = Item
@@ -8,8 +8,8 @@ class ItemAdmin(admin.ModelAdmin):
     list_filter = ('published','category', 'created_date')
     list_editable = ["published"]
     search_fields = ['title','description']
-    #filter_horizontal = ('category',)
     list_per_page = 10
+    form = ItemAdminForm
 
 class CategoryAdmin(admin.ModelAdmin):
     models = Category
@@ -18,6 +18,7 @@ class CategoryAdmin(admin.ModelAdmin):
     list_editable = ["published"]
     search_fields = ['title','description']
     list_per_page = 10
+    form = CategoryAdminForm
 
 class DetailAdmin(admin.ModelAdmin):
     models = Detail
@@ -27,6 +28,7 @@ class DetailAdmin(admin.ModelAdmin):
     search_fields = ['title','description','items']
     filter_horizontal = ('items',)
     list_per_pag = 10
+    form = DetailAdminForm
 
 admin.site.register(Item, ItemAdmin)
 admin.site.register(Category, CategoryAdmin)
