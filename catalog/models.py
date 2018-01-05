@@ -54,7 +54,7 @@ class Category(models.Model):
 class Detail(models.Model):
     title = models.CharField(max_length=200, verbose_name="Наименование")
     description = models.TextField(verbose_name="Описание")
-    items = models.ManyToManyField("Item",verbose_name="Продукция")
+    items = models.ManyToManyField("Item",verbose_name="Изделия")
     published = models.BooleanField(default=1,verbose_name="Опубликовано")
     created_date = models.DateTimeField(default=timezone.now, editable=False, verbose_name="Дата добавления")
 
