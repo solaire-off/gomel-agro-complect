@@ -53,6 +53,7 @@ class Item(models.Model):
 
 class Category(models.Model):
     title = models.CharField(max_length=200, verbose_name="Наименование")
+    url = models.CharField(max_length=200, verbose_name="Ссылка")
     description  = models.TextField(verbose_name="Описание")
     published = models.BooleanField(default=1, verbose_name="Опубликовано")
     created_date = models.DateTimeField(default=timezone.now, editable=False, verbose_name="Дата добавления")

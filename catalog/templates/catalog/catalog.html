@@ -5,9 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Каталог | Гомельагрокомлект</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.6.2/css/bulma.min.css">
-    <style>.image img{width:100%;height:100%;object-fit:cover}.items{flex-wrap: wrap}
-    @media all and (min-width: 769px){.column.is-6{width: 47%; margin-left:0.75rem;margin-right: 0.75rem}}
-    @media all and (min-width: 769px){.column.is-4{width: 31%; margin-left:0.75rem;margin-right: 0.75rem}}</style>
+    <style>.image img{width:100%;height:100%;object-fit:cover}</style>
 </head>
 <body>
     <section class="hero is-link">
@@ -63,26 +61,27 @@
         <div class="container">
             <div class="columns">
                 {% if category %}
-                <!--
                 <div class="column is-3-tablet is-2-desktop">
                     <aside class="menu">
-                        <p class="menu-label">Категории</p>
+                        <p class="menu-label">Категории {% if selected_category %}<a style="float:right" href="{% url 'items_list' %}">СБРОСИТЬ</a>{% endif %}</p>
+
+
                         <ul class="menu-list">
                             <li>
                                 {% for item in category %}
-                                <a href="#">{{ item.title  }}</a>
+                                <a href="/{{ item.url }}" {% if selected_category.title == item.title %}class="is-active"{% endif %}>{{ item.title  }}</a>
                                 {% endfor %}
                             </li>
                         </ul>
                     </aside>
                 </div>
-                -->
                 {% endif %}
                 {% if items %}
                 <div class="column">
-                    <div class="columns items">
+                    <div class="columns is-multiline is-mobile">
                     {% for item in items %}
-                    <div class="column {% if category %}is-6{% else %}is-4{% endif %} box">
+                    <div class="column {% if category %}is-6{% else %}is-4{% endif %}">
+                        <div class="box">
                         <article class="media">
                             {% if item.image %}
                             <div class="media-left">
@@ -90,9 +89,10 @@
                             </div>
                             {% endif %}
                             <div class="media-content">
-                                <div class="content"><strong>{{ item.title  }}</strong> <br/>{{ item.description | safe }}</div>
+                                <div class="content"><strong>{{ item.title  }}</strong> <br/>{{ item.description | safe | truncatechars:115 }}</div>
                             </div>
                         </article>
+                        </div>
                     </div>
                     {% endfor %}
                     </div>
