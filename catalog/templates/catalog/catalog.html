@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Каталог | Гомельагрокомлект</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.6.2/css/bulma.min.css">
+    <style>.image img{width:100%;height:100%;object-fit:cover}.items{flex-wrap: wrap}
+    @media all and (min-width: 769px){.column.is-6{width: 47%; margin-left:0.75rem;margin-right: 0.75rem}}
+    @media all and (min-width: 769px){.column.is-4{width: 31%; margin-left:0.75rem;margin-right: 0.75rem}}</style>
+</head>
+<body>
+    <section class="hero is-link">
+        <div class="hero-body">
+            <div class="container">
+                <div class="columns is-vcentred">
+                    <div class="column">
+                        <p class="title">ОАО «Гомельагрокомплект»</p>
+                        <p class="subtitle">
+                        247016, Республика Беларусь,<br/>
+                        г. Гомель, а/г Ерёмино, ул. Сурганова, 14<br/>
+                        Телефон: +375 (232) 93-36-66, Факс: +375 (232) 93-36-40
+                        </p>
+                    </div>
+                    <div class="column is-4">
+                        <div class="box">
+                            <div class="media">
+                                <div class="media-left">
+                                    <figure class="image">
+                                        <img src="http://www.gomelagro.com/img/gomelagro.png" alt="">
+                                    </figure>
+                                </div>
+                                <div class="media-content">
+                                    <div class="content">
+                                        <p style="color:#4a4a4a" class="subtitle">К высокому качеству молока вместе с нами!</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div> 
+            </div>
+        </div>
+        <div class="hero-foot">
+            <div class="container">
+                <nav class="tabs is-boxed">
+                    <ul>
+                        <li class="is-active"><a href="#">Продукция</a></li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </section>
+    <nav class="navbar has-shadow">
+        <div class="container">
+            <div class="navbar-tabs">
+                <a class="navbar-item is-tab {% if category  %}is-active{% endif %}" href="{% url 'items_list' %}">Оборудование</a>
+                <a class="navbar-item is-tab {% if not category %}is-active{% endif %}" href="{% url 'details_list' %}">Запчасти</a>
+            </div>
+        </div>
+    </nav>
+    <section class="section">
+        <div class="container">
+            <div class="columns">
+                {% if category %}
+                <!--
+                <div class="column is-3-tablet is-2-desktop">
+                    <aside class="menu">
+                        <p class="menu-label">Категории</p>
+                        <ul class="menu-list">
+                            <li>
+                                {% for item in category %}
+                                <a href="#">{{ item.title  }}</a>
+                                {% endfor %}
+                            </li>
+                        </ul>
+                    </aside>
+                </div>
+                -->
+                {% endif %}
+                {% if items %}
+                <div class="column">
+                    <div class="columns items">
+                    {% for item in items %}
+                    <div class="column {% if category %}is-6{% else %}is-4{% endif %} box">
+                        <article class="media">
+                            {% if item.image %}
+                            <div class="media-left">
+                                <figure class="image is-128x128"><img src="{{ item.image.url }}" alt="{{ item.title }}"></figure>
+                            </div>
+                            {% endif %}
+                            <div class="media-content">
+                                <div class="content"><strong>{{ item.title  }}</strong> <br/>{{ item.description | safe }}</div>
+                            </div>
+                        </article>
+                    </div>
+                    {% endfor %}
+                    </div>
+                </div>
+                {% endif %}
+            </div>
+        </div>
+    </section>
+    
+    
+</body>
+</html>
