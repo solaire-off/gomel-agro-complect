@@ -1,0 +1,47 @@
+{% extends 'catalog/base.html' %}
+{% block title %}Оборудование | ОАО «Гомельагрокомплект»{% endblock %}
+{% block content %}
+<section class="section">
+        <div class="container">
+            <div class="columns">
+                {% if category %}
+                <div class="column is-3-tablet is-2-desktop">
+                    <aside class="menu">
+                        <p class="menu-label">Категории {% if selected_category %}<a style="float:right" href="{% url 'items_list' %}">СБРОСИТЬ</a>{% endif %}</p>
+                        <ul class="menu-list">
+                            <li>
+                                {% for item in category %}
+                                <a href="/{{ item.url }}" {% if selected_category.title == item.title %}class="is-active"{% endif %}>{{ item.title  }}</a>
+                                {% endfor %}
+                            </li>
+                        </ul>
+                    </aside>
+                </div>
+                {% endif %}
+                {% if items %}
+                <div class="column">
+                    <div class="columns is-multiline is-mobile">
+                    {% for item in items %}
+                    <div class="column {% if category %}is-6{% else %}is-4{% endif %}">
+                        <div class="box">
+                        <article class="media">
+                            {% if item.image %}
+                            <div class="media-left">
+                                <figure class="image is-128x128"><img src="{{ item.image.url }}" alt="{{ item.title }}"></figure>
+                            </div>
+                            {% endif %}
+                            <div class="media-content">
+                                <div class="content"><strong>{{ item.title  }}</strong> <br/>{{ item.description | safe | truncatechars:110  }}
+                                    <p><a href="/{{ item.category.url }}/{{ item.url}}">Подробне</a></p></div>
+                            </div>
+                        </article>
+                        </div>
+                    </div>
+                    {% endfor %}
+                    </div>
+                </div>
+                {% endif %}
+            </div>
+        </div>
+    </section>
+{% endblock %}

@@ -4,7 +4,7 @@ from .forms import ItemAdminForm, CategoryAdminForm, DetailAdminForm
 
 class ItemAdmin(admin.ModelAdmin):
     models = Item
-    list_display = ('title','description','category','published','created_date')
+    list_display = ('title','url','category','published','created_date')
     list_filter = ('published','category', 'created_date')
     list_editable = ["published"]
     search_fields = ['title','description']
@@ -13,7 +13,7 @@ class ItemAdmin(admin.ModelAdmin):
 
 class CategoryAdmin(admin.ModelAdmin):
     models = Category
-    list_display = ('title','description','published','created_date')
+    list_display = ('title','url','published','created_date')
     list_filter = ('created_date',)
     list_editable = ["published"]
     search_fields = ['title','description']
@@ -22,7 +22,7 @@ class CategoryAdmin(admin.ModelAdmin):
 
 class DetailAdmin(admin.ModelAdmin):
     models = Detail
-    list_display = ('title','description','published','created_date')
+    list_display = ('title','url','published','created_date')
     list_filter = ('created_date',)
     list_editable = ["published"]
     search_fields = ['title','description','items']
