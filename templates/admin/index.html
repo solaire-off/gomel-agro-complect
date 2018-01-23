@@ -1,7 +1,26 @@
 {% extends "admin/base_site.html" %}
 {% load i18n static %}
 
-{% block extrastyle %}{{ block.super }}<link rel="stylesheet" type="text/css" href="{% static "admin/css/dashboard.css" %}" />{% endblock %}
+{% block extrastyle %}
+{{ block.super }}
+<link rel="stylesheet" type="text/css" href="{% static "admin/css/dashboard.css" %}" />
+<style>
+#recent-actions-module{
+    display: none
+}
+div.breadcrumbs{
+    display: none
+}
+.admin-menu{
+    display: flex;
+    justify-content: space-around
+}
+.admin-menu a{
+    background: #79aec8;
+    padding: 8px 35px;
+    }
+</style>
+{% endblock %}
 
 {% block coltype %}colMS{% endblock %}
 
@@ -10,20 +29,21 @@
 {% block breadcrumbs %}{% endblock %}
 
 {% block content %}
+{% if app_list %}
 <div id="content-main">
-
+        <div class="app-none module admin-menu">
+        <a class="section" href="/admin/dashboard/mydash/">Доска заявок</a>
+        <a class="section" href="{% url 'export_catalog_xls' %}">Экспорт каталога</a>
+        <a class="section" href="{% url 'export_users_xls' %}">Экспорт пользователей</a>
+        </div>
+{% endif %}
+ 
 {% if app_list %}
     {% for app in app_list %}
         <div class="app-{{ app.app_label }} module">
         <table>
         <caption>
-            <a href="{{ app.app_url }}" class="section" title="{% blocktrans with name=app.name %}Models in the {{ name }} application{% endblocktrans %}">{{ app.name }}</a>
-            {% if app.name == "Каталог" %}
-            <!-- <a style="float:right" href="#" class="section" title="Импортировать модели из приложения Каталог в формате EXCEL">EXCEL</a> -->
-            {% endif %}
-            {% if app.name == "Пользователи и группы" %}
-            <a style="float:right" href="{% url 'export_users_xls' %}"  class="section" title="Импортировать модели из приложения Пользователи и Группы в формате EXCEL">EXCEL</a>
-            {% endif %}
+            <span class="section">{{ app.name }}</span>
         </caption>
         {% for model in app.models %}
             <tr class="model-{{ model.object_name|lower }}">

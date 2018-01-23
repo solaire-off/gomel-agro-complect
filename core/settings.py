@@ -38,6 +38,7 @@ INSTALLED_APPS = [
 
     'ckeditor',
     'flat_responsive',
+    'controlcenter',
 
     'django.contrib.admin',
     'django.contrib.auth',
@@ -139,4 +140,11 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 # CKEDITOR SETTING
 
 CKEDITOR_UPLOAD_PATH = "uploads/"
+
+
+# Dashboards
+
+CONTROLCENTER_DASHBOARDS = (
+        ('mydash', 'catalog.dashboards.ItemDashboard'),
+)
 

@@ -1,13 +1,14 @@
+{% load staticfiles %}
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>{% block title %}{% endblock %}</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.6.2/css/bulma.min.css">
-    <style>.image img{width:100%;height:100%;object-fit:cover}.image.is-256x256 img{width: 256px;height: 256px}
-           .details .media{align-items: center}.details img{max-width: 5rem; height: 3.75rem}</style>
-</head>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>{% block title %}{% endblock %}</title>
+        <link rel="stylesheet" href="{% static 'css/bulma.min.css' %}">
+        <style>.image img{width:100%;height:100%;object-fit:cover}.image.is-256x256 img{width: 256px;height: 256px}
+.details .media{align-items: center}.details .image{max-width: 5rem; max-height: 3.75rem}</style>
+    </head>
 <body>
     <section class="hero is-link">
         <div class="hero-body">
@@ -26,7 +27,7 @@
                             <div class="media">
                                 <div class="media-left">
                                     <figure class="image">
-                                        <img src="http://www.gomelagro.com/img/gomelagro.png" alt="">
+                                        <img src="{% static 'img/logo.png' %}" alt="">
                                     </figure>
                                 </div>
                                 <div class="media-content">

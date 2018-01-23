@@ -18,11 +18,14 @@ from django.conf.urls.static import static
 from django.contrib import admin
 from .settings import DEBUG, MEDIA_URL, MEDIA_ROOT, STATIC_URL, STATIC_ROOT
 from . import views
+from controlcenter.views import controlcenter
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
+    url(r'admin/dashboard/', controlcenter.urls),
     url(r'^ckeditor/', include('ckeditor_uploader.urls')),
     url(r'^export/users/xls/$', views.export_users_xls, name='export_users_xls'),
+    url(r'^export/catalog/xls/$', views.export_catalog_xls, name='export_catalog_xls'),
     url(r'', include('catalog.urls'))
 ]
 
