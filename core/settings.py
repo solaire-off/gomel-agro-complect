@@ -35,6 +35,7 @@ ALLOWED_HOSTS = [
 
 INSTALLED_APPS = [
     'catalog',
+    'orders',
 
     'ckeditor',
     'flat_responsive',
@@ -145,6 +146,6 @@ CKEDITOR_UPLOAD_PATH = "uploads/"
 # Dashboards
 
 CONTROLCENTER_DASHBOARDS = (
-        ('mydash', 'catalog.dashboards.ItemDashboard'),
+        ('orders', 'orders.dashboards.OrderDashboard'),
 )
 

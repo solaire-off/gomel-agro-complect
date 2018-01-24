@@ -8,9 +8,6 @@
 #recent-actions-module{
     display: none
 }
-div.breadcrumbs{
-    display: none
-}
 .admin-menu{
     display: flex;
     justify-content: space-around
@@ -19,6 +16,9 @@ div.breadcrumbs{
     background: #79aec8;
     padding: 8px 35px;
     }
+body:not(.app-orders) .app-orders{
+    display: none
+}
 </style>
 {% endblock %}
 
@@ -32,7 +32,7 @@ div.breadcrumbs{
 {% if app_list %}
 <div id="content-main">
         <div class="app-none module admin-menu">
-        <a class="section" href="/admin/dashboard/mydash/">Доска заявок</a>
+        <a class="section" href="/admin/dashboard/orders/">Доска заявок</a>
         <a class="section" href="{% url 'export_catalog_xls' %}">Экспорт каталога</a>
         <a class="section" href="{% url 'export_users_xls' %}">Экспорт пользователей</a>
         </div>
@@ -40,7 +40,7 @@ div.breadcrumbs{
  
 {% if app_list %}
     {% for app in app_list %}
-        <div class="app-{{ app.app_label }} module">
+    <div class="app-{{ app.app_label }} module">
         <table>
         <caption>
             <span class="section">{{ app.name }}</span>
