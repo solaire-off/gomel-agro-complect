@@ -2,6 +2,7 @@ from django.shortcuts import render
 from django.shortcuts import get_object_or_404
 from django.http import Http404
 from .models import Item, Category, Detail
+from orders.forms import OrderForm
 
 def items_list(request):
     items = Item.objects.filter(published=True)
@@ -36,10 +37,12 @@ def single_item(request, category_url, item_url):
     if not item.published : raise Http404
     category = Category.objects.filter(published=True)
     details = Detail.objects.filter(items=item)
+    order_form = OrderForm
     context = {
-         'item':item,
-         'category':category,
-         'details':details
+        'item':item,
+        'category':category,
+        'details':details,
+        'order_form': order_form
     }
     return render(request,'catalog/single_item.html', context)
 

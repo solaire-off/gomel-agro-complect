@@ -1,6 +1,27 @@
 from django.http import HttpResponse
 from django.utils import timezone
+from .forms import OrderForm
+from django.http import JsonResponse
+from catalog.models import Item
 import xlwt
+
+
+def get_order_form(request):
+    is_valid = False
+    if request.POST:
+        form = OrderForm(request.POST)
+        item_id = request.POST.get('item')
+        if form.is_valid():
+            is_valid = True
+            order = form.save(commit=False)
+            order.item = Item.objects.get(pk=int(item_id))
+            order.processed = False
+            order.created_date = timezone.now()
+            order.save()
+    context = {
+        'valid': is_valid
+    }
+    return JsonResponse(context)
 
 def export_orders_as_xls(modeladmin, request, queryset):
     response = HttpResponse(content_type='application/ms-excel')
