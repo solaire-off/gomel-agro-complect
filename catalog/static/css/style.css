@@ -11,12 +11,30 @@
     align-items: center
 }
 .details .image{
-    max-width: 5rem;
-    max-height: 3.75rem
+    height: 64px
 }
 .content figure{
     margin-left:0;
     margin-right:0;
+}
+.detail-description ul{
+    margin-left:1.1rem;
+    margin-top:0;
+}
+.detail-img{
+    height:64px;
+}
+.item-img{
+    height: 128px;
+    max-width: 178px;
+}
+.item-next{
+    position: relative;
+    bottom: 8px
+}
+.item-order{
+    text-align: center;
+    margin: 10px auto 0 auto
 }
 .modal {
     display: none; 
@@ -58,14 +76,22 @@
 }
 .modal-header {
     padding: 2px 16px;
-    background-color: #5cb85c;
+    background-color:#3273dc;
     color: white;
 }
-
+.modal-header p{
+    padding: 1rem 0;
+}
+.modal .content{
+    margin-bottom:0;
+}
 .modal-body {padding: 20px 16px;}
 
 .modal-footer {
     padding: 2px 16px;
     background-color: #5cb85c;
     color: white;
+}
+.overflow-hidden{
+    overflow: hidden;
 }

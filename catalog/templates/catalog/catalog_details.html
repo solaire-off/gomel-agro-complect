@@ -13,11 +13,11 @@
                         <article class="media">
                             {% if item.image %}
                             <div class="media-left">
-                                <figure class="image is-128x128"><img src="{{ item.image.url }}" alt="{{ item.title }}"></figure>
+                                <figure class="image is-3by4 detail-img"><img src="{{ item.image.url }}" alt="{{ item.title }}"></figure>
                             </div>
                             {% endif %}
                             <div class="media-content">
-                                <div class="content"><strong>{{ item.title  }}</strong> 
+                                <div class="content detail-description"><strong>{{ item.title  }}</strong> 
                                     <ul>
                                         {% for item in item.items.all %}
                                         <li><a href="/{{ item.category.url }}/{{ item.url}}">{{ item.title }}</a></li>

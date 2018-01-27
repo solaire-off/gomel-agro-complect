@@ -1,17 +1,62 @@
 document.addEventListener("DOMContentLoaded", function() {
 
+    function hasClass(elem, className) {
+        return new RegExp(' ' + className + ' ').test(' ' + elem.className + ' ');
 
-    $popupToogle  = document.querySelector('.js-open-popup');
+    }
+
+    function addClass(elem, className) {
+        if (!hasClass(elem, className)) {
+            elem.className += ' ' + className;
+
+        }
+
+    }
+
+    function removeClass(elem, className) {
+        var newClass = ' ' + elem.className.replace( /[\t\r\n]/g, ' ' ) + ' ';
+        if (hasClass(elem, className)) {
+            while (newClass.indexOf(' ' + className + ' ') >= 0 ) {
+                newClass = newClass.replace(' ' + className + ' ', ' ');
+
+            }
+            elem.className = newClass.replace(/^\s+|\s+$/g, '');
+
+        }
+
+    }
+    function toggleClass(elem, className) {
+        var newClass = ' ' + elem.className.replace( /[\t\r\n]/g, " "  ) + ' ';
+        if (hasClass(elem, className)) {
+            while (newClass.indexOf(" " + className + " ") >= 0 ) {
+                newClass = newClass.replace( " " + className + " " , " "  );
+
+            }
+            elem.className = newClass.replace(/^\s+|\s+$/g, '');
+
+        } else {
+            elem.className += ' ' + className;
+
+        }
+
+    }
+
+    $html         = document.getElementsByTagName('html')[0];
+    $popupToggle  = document.querySelector('.js-open-popup');
     $contactPopup = document.getElementById('contact-popup')
     $popupClose   = document.querySelector('.js-close-popup');
 
-    if ($popupToogle &&  $popupClose){
-        $popupToogle.addEventListener('click', function() {
+
+    if ($popupToggle &&  $popupClose){
+        $popupToggle.addEventListener('click', function() {
             $contactPopup.style.display = 'block';
+            toggleClass($html, 'overflow-hidden');
+
         });
 
         $popupClose.addEventListener('click', function() {
             $contactPopup.style.display = 'none';
+            toggleClass($html, 'overflow-hidden');
         });
 
 
@@ -19,6 +64,7 @@ document.addEventListener("DOMContentLoaded", function() {
         window.onclick = function(event) {
             if (event.target == $contactPopup) {
                 $contactPopup.style.display = "none";
+                toggleClass($html, 'overflow-hidden');
             }
         }
 
@@ -84,6 +130,7 @@ document.addEventListener("DOMContentLoaded", function() {
                     $newDeleteButtons.addEventListener('click', function() {
                         $newNotification.remove();
                         $contactPopup.style.display = 'none';
+                        toggleClass($html, 'overflow-hidden');
 
                     });
                 }

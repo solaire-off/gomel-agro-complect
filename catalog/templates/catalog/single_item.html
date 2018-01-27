@@ -20,11 +20,11 @@
                 <div class="box">
                     <article class="media">
                         {% if item.image %}
-                        <div class="media-left content">
-                            <figure class="image is-128x128">
+                        <div class="media-left">
+                            <figure class="image is-3by4 item-img">
                                 <img src="{{ item.image.url }}" alt="{{ item.title }}">
-                                <caption><button class="button is-link is-small js-open-popup">Оставить заявку</button></caption>
                             </figure>
+                            <p class="item-order"><button class="button is-link is-small js-open-popup">Оставить заявку</button></p>
                         </div>
                         {% endif %}
                         <div class="media-content">
@@ -67,6 +67,9 @@
 
 <div id="contact-popup" class="modal">
     <div class="modal-content">
+        <div class="modal-header content">
+            <p class="title is-4 has-text-centered has-text-white">Отправить заявку</p>
+        </div>
         <div class="modal-body">
             {% include "orders/order_form.html" with form=order_form item=item %}
         </div>

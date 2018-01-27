@@ -27,12 +27,12 @@
                         <article class="media">
                             {% if item.image %}
                             <div class="media-left">
-                                <figure class="image is-128x128"><img src="{{ item.image.url }}" alt="{{ item.title }}"></figure>
+                                <figure class="image item-img"><img src="{{ item.image.url }}" alt="{{ item.title }}"></figure>
                             </div>
                             {% endif %}
                             <div class="media-content">
                                 <div class="content"><strong>{{ item.title  }}</strong> <br/>{{ item.description | safe | truncatechars:110  }}
-                                    <p><a href="/{{ item.category.url }}/{{ item.url}}">Подробне</a></p></div>
+                                    <p><a class=" is-small item-next" href="/{{ item.category.url }}/{{ item.url}}">Подробнее</a></p></div>
                             </div>
                         </article>
                         </div>
