@@ -32,14 +32,13 @@ class ItemAdminForm(forms.ModelForm):
 
 
 class CategoryAdminForm(forms.ModelForm):
-    description = forms.CharField(widget=CKEditorWidget(), label="Описание")
+    description = forms.CharField(required=False, widget=CKEditorWidget(), label="Описание")
 
     class Meta:
         model = Category
         fields = '__all__'
 
 class DetailAdminForm(forms.ModelForm):
-    description = forms.CharField(widget=CKEditorWidget(), label="Описание")
     image =  forms.ImageField(label='Изображение', widget=AdminImageWidget)
 
     class Meta:

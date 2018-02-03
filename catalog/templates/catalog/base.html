@@ -44,7 +44,10 @@
             <div class="container">
                 <nav class="tabs is-boxed">
                     <ul>
-                        <li class="is-active"><a href="#">Продукция</a></li>
+                        <li class="is-active"><a href="/">Каталог</a></li>
+                        {% if request.user.is_superuser %}
+                        <li><a href="{% url 'admin:index' %}">Панель админстратора</a></li>
+                        {% endif %}
                     </ul>
                 </nav>
             </div>

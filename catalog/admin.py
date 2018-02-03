@@ -8,7 +8,7 @@ class ItemAdmin(admin.ModelAdmin):
     list_filter = ('published','category', 'created_date')
     list_editable = ["published"]
     search_fields = ['title','description']
-    list_per_page = 10
+    list_per_page = 20
     form = ItemAdminForm
 
 class CategoryAdmin(admin.ModelAdmin):
@@ -17,17 +17,17 @@ class CategoryAdmin(admin.ModelAdmin):
     list_filter = ('created_date',)
     list_editable = ["published"]
     search_fields = ['title','description']
-    list_per_page = 10
+    list_per_page = 20
     form = CategoryAdminForm
 
 class DetailAdmin(admin.ModelAdmin):
     models = Detail
-    list_display = ('title','url','published','created_date')
+    list_display = ('title','published','created_date')
     list_filter = ('created_date',)
     list_editable = ["published"]
     search_fields = ['title','description','items']
     filter_horizontal = ('items',)
-    list_per_pag = 10
+    list_per_pag = 20
     form = DetailAdminForm
 
 admin.site.register(Item, ItemAdmin)

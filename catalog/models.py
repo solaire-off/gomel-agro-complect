@@ -1,50 +1,38 @@
 from django.db import models
 from django.utils import timezone
 from transliterate import translit
-from django.utils.html import format_html as fh
+from django.template.defaultfilters import slugify
 
 def TranslitToEn(text):
-    return translit(text, 'ru', reversed=True)
+    return translit(text, 'ru', reversed=True).lower()
 
 def UploadImageForItem(object,filename):
-    if object.url:
-        return 'items/%s/%s'%(object.url, filename)
-    return 'items/%s/%s'%(TranslitToEn(object.title),filename)
-
+    return 'items/%s/%s'%(object.url, filename)
 
 def UploadImageForDetail(object,filename):
-    if object.url:
-        return 'items/%s/%s'%(object.url, filename)
-    return 'items/%s/%s'%(TranslitToEn(object.title),filename)
+    return 'items/%s/%s'%(object.url, filename)
+
+def isBlank(myString):
+    return not (myString and myString.strip())
+
 
 class Item(models.Model):
-    title = models.CharField(max_length=200, verbose_name="Наименование")
+    title = models.CharField(max_length=200, verbose_name="Наименование", help_text="Название или модель оборудования")
     description = models.TextField(verbose_name="Описание")
-    category = models.ForeignKey('Category', null=True, on_delete=models.SET_NULL, verbose_name="Категория")
-    image = models.FileField(upload_to=UploadImageForItem, blank=True, null=True,verbose_name="Изображение")
-    url = models.CharField(max_length=200, null=True, blank=True, verbose_name="Ссылка")
-    published = models.BooleanField(default=1,verbose_name="Опубликовано")
+    category = models.ForeignKey('Category', null=True, on_delete=models.SET_NULL, verbose_name="Категория", help_text="Укажите категорию оборудования для удобной фильтрации")
+    image = models.FileField(upload_to=UploadImageForItem, blank=True, null=True, verbose_name="Изображение")
+    url = models.CharField(max_length=200, null=True, blank=True, verbose_name="Ссылка", help_text="Если оставить поле пустым, ссылка сгенерируется автоматическ из наименования")
+    published = models.BooleanField(default=1,verbose_name="Опубликовано", help_text="Если оборудование не опубликовано, оно не будет отображаться в каталоге")
     created_date = models.DateTimeField(default=timezone.now, editable=False, verbose_name="Дата добавления")
 
     class Meta:
         verbose_name = 'Продукт'
         verbose_name_plural = 'Продукты'
 
-    def publish(self):
-        self.publish = True
-        self.save()
-
-    def hide(self):
-        self.publish = False
-        self.save()
-
-
-    def thumbnail(self):
-        if self.image:
-            return fh('<img style="object-fit: cover; width:75px; height: 55px" src="%s">' % self.image.url)
-        return '(Отсутствует)'
-
-    thumbnail.short_description = "Миниатюра"
+    def save(self, *args, **kwargs):
+        if isBlank(self.url):
+            self.url = slugify(TranslitToEn(self.title))
+        super(Item, self).save(*args, **kwargs)
 
     def __str__(self):
         return self.title
@@ -53,26 +41,29 @@ class Item(models.Model):
 
 class Category(models.Model):
     title = models.CharField(max_length=200, verbose_name="Наименование")
-    url = models.CharField(max_length=200, verbose_name="Ссылка")
-    description  = models.TextField(verbose_name="Описание")
-    published = models.BooleanField(default=1, verbose_name="Опубликовано")
+    url = models.CharField(max_length=200, verbose_name="Ссылка", blank=True, null=True, help_text="По ссылке будет доступно оборудование из данной категории. Если оставить поле пустым, ссылка автоматически сгенерируется из наименования.")
+    description  = models.TextField(verbose_name="Описание", blank=True, null=True)
+    published = models.BooleanField(default=1, verbose_name="Опубликовано", help_text="Если категория не опубликована, она и всё обородование, принадлжащее этой категории, не будут доступны в каталоге")
     created_date = models.DateTimeField(default=timezone.now, editable=False, verbose_name="Дата добавления")
 
     class Meta:
         verbose_name = 'Категорию'
         verbose_name_plural = 'Категории'
 
+    def save(self, *args, **kwargs):
+        if isBlank(self.url):
+            self.url = slugify(TranslitToEn(self.title))
+        super(Category, self).save(*args, **kwargs)
+
     def __str__(self):
         return self.title
 
 
 class Detail(models.Model):
-    title = models.CharField(max_length=200, verbose_name="Наименование")
-    description = models.TextField(verbose_name="Описание")
-    items = models.ManyToManyField("Item",verbose_name="Изделия")
+    title = models.CharField(max_length=200, verbose_name="Наименование", help_text="Название или маркировка запчасти")
+    items = models.ManyToManyField("Item",verbose_name="Изделия", help_text="Укажите для какого оборудование подойдет данная деталь.")
     image = models.FileField(upload_to=UploadImageForDetail, blank=True, null=True,verbose_name="Изображение")
-    url = models.CharField(max_length=200, null=True, blank=True, verbose_name="Ссылка")
-    published = models.BooleanField(default=1,verbose_name="Опубликовано")
+    published = models.BooleanField(default=1,verbose_name="Опубликовано", help_text="Если деталь не опубликована, она не будет отображаться в каталоге")
     created_date = models.DateTimeField(default=timezone.now, editable=False, verbose_name="Дата добавления")
 
     class Meta:

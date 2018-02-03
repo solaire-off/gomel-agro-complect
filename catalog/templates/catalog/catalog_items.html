@@ -31,7 +31,7 @@
                             </div>
                             {% endif %}
                             <div class="media-content">
-                                <div class="content"><strong>{{ item.title  }}</strong> <br/>{{ item.description | safe | truncatechars:110  }}
+                                <div class="content"><strong>{{ item.title  }}</strong> <br/>{{ item.description | safe | truncatechars:100  }}
                                     <p><a class=" is-small item-next" href="/{{ item.category.url }}/{{ item.url}}">Подробнее</a></p></div>
                             </div>
                         </article>
