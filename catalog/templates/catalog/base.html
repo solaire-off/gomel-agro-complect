@@ -62,6 +62,37 @@
                 <a class="navbar-item is-tab {% if category  %}is-active{% endif %}" href="{% url 'items_list' %}">Оборудование</a>
                 <a class="navbar-item is-tab {% if not category %}is-active{% endif %}" href="{% url 'details_list' %}">Запчасти</a>
             </div>
+            <div class="navbar-end">
+                <div class="navbar-item">
+                    <form action="/" method="GET">
+                    <div class="field is-grouped">
+                        <div class="field is-horizontal">
+                            <div class="field-label is-normal">
+                                <label class="label">Поиск</label>
+                            </div>
+                            <div class="field-body">
+                                <div class="field has-addons">
+                                    <p class="control">
+                                    <input required class="input" type="text" name="q" {% if query %} value="{{ query}}" {% endif %}  placeholder="Например, МКП-600">
+                                    </p>
+                                    <div class="control">
+                                        {% if query %}
+                                        <a href="{% url 'items_list' %}" class="button is-danger">
+                                            Сброс
+                                        </a>
+                                        {% else %}
+                                        <button class="button is-info">
+                                            Искать
+                                        </button>
+                                        {% endif %}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+                </div>
+            </div>
         </div>
     </nav>
     

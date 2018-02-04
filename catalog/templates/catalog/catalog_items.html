@@ -18,6 +18,20 @@
                     </aside>
                 </div>
                 {% endif %}
+                {% if query and not items %}
+                <div class="column">
+                    <div class="columns is-multiline is-mobile">
+                        <div class="column is-6 is-offset-3">
+                            <div class="content">
+                                <div class="notification">
+                                    <a class="delete" href="{% url 'items_list' %}"></a>
+                                    <p>По запросу "{{ query  }}" ничего не найдено.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                {% endif %}
                 {% if items %}
                 <div class="column">
                     <div class="columns is-multiline is-mobile">
@@ -39,6 +53,35 @@
                     </div>
                     {% endfor %}
                     </div>
+                    {% if items.has_other_pages %}
+                    <nav class="pagination" role="navigation" aria-label="pagination">
+                        {% if items.has_previous %}
+                        <a class="pagination-previous" href="?page={{ items.previous_page_number  }}{% if request.GET.q %}&q={{ request.GET.q  }}{% endif %}" >Предыдущая</a>
+                        {% else %}
+                        <a class="pagination-previous" title="Это первая страница" disabled>Предыдущая</a>
+                        {% endif %}
+                        {% if items.has_next %}
+                        <a class="pagination-next" href="?page={{ items.next_page_number  }}{% if request.GET.q %}&q={{ request.GET.q  }}{% endif %}">Следующая</a>
+                        {% else %}
+                        <a class="pagination-previous" title="Это последняя страница" disabled>Следующая</a>
+                        {% endif %}
+                        <ul class="pagination-list">
+                            {% if items.has_previous %}
+                            <li>
+                                <a class="pagination-link" href="?page={{ items.previous_page_number  }}{% if request.GET.q %}&q={{ request.GET.q  }}{% endif %}" aria-label="Перейти на страницу №{{ items.previous_page_number  }}">{{ items.previous_page_number  }}</a>
+                            </li>
+                            {% endif %}
+                            <li>
+                                <span class="pagination-link is-current" aria-label="Страница {{ items.number  }}" aria-current="страница">{{ items.number }}</span>
+                            </li>
+                            {% if items.has_next %}
+                            <li>
+                                <a class="pagination-link" href="?page={{ items.next_page_number  }}{% if request.GET.q %}&q={{ request.GET.q  }}{% endif %}" aria-label="Перейти на страницу №{{ items.next_page_number  }}">{{ items.next_page_number  }}</a>
+                            </li>
+                            {% endif %}
+                        </ul>
+                    </nav>
+                    {% endif %}
                 </div>
                 {% endif %}
             </div>
