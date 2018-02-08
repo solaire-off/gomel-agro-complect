@@ -8,7 +8,7 @@ from orders.forms import OrderForm
 
 
 def items_list(request):
-    items = Item.objects.filter(published=True).order_by('-created_date')
+    items = Item.objects.filter(published=True, category__published=True).order_by('-created_date')
     category = Category.objects.filter(published=True).order_by('title')
     query = request.GET.get('q')
     if query:
@@ -54,7 +54,7 @@ def items_by_category(request, category_url):
 
 def single_item(request, category_url, item_url):
     item = get_object_or_404(Item,url=item_url)
-    if not item.published : raise Http404
+    if not item.published or item.category.published: raise Http404
     category = Category.objects.filter(published=True).order_by("title")
     details = Detail.objects.filter(items=item)
     order_form = OrderForm
