@@ -124,15 +124,25 @@ document.addEventListener("DOMContentLoaded", function() {
 
                     successMessage = 'Спасибо! Данные успешно отправлены';
                     $orderForm.parentElement.insertAdjacentHTML('afterbegin', '<div class="notification is-link"><button class="delete js-close-popup"></button>' + successMessage  + '</div>');
-
                     $newDeleteButtons = document.querySelector('.delete');
-                    $newNotification  = $newDeleteButtons.parentElement;
-                    $newDeleteButtons.addEventListener('click', function() {
-                        $newNotification.remove();
-                        $contactPopup.style.display = 'none';
-                        toggleClass($html, 'overflow-hidden');
 
-                    });
+
+
+                    $newNotification  = $newDeleteButtons.parentElement;
+
+                    // $newDeleteButtons.addEventListener('click', function() {
+                    //     $newNotification.remove();
+                    //     $contactPopup.style.display = 'none';
+                    //     toggleClass($html, 'overflow-hidden');
+                    // });
+
+                    document.addEventListener('click', function (e) {
+                        if (hasClass(e.target, 'delete')) {
+                            $newNotification.remove();
+                            $contactPopup.style.display = 'none';
+                            toggleClass($html, 'overflow-hidden');
+                        }
+                    }, false);
                 }
                 else {
                     console.log("Sending error")

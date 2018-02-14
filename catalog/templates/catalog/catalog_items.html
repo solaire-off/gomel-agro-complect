@@ -7,11 +7,25 @@
                 {% if category %}
                 <div class="column is-3-tablet is-2-desktop">
                     <aside class="menu">
-                        <p class="menu-label">Категории {% if selected_category %}<a style="float:right" href="{% url 'items_list' %}">СБРОСИТЬ</a>{% endif %}</p>
+                        <p class="menu-label">
+                            {% if query %}
+                            Фильтр {% if query_category %}<a style="float:right" href="{% url 'items_list' %}?q={{ query }}">СБРОСИТЬ</a>{% endif %}
+                            {% else %}
+                            Категории {% if selected_category %}<a style="float:right" href="{% url 'items_list' %}">СБРОСИТЬ</a>{% endif %}
+                            {% endif %}
+                        </p>
                         <ul class="menu-list">
                             <li>
                                 {% for item in category %}
-                                <a href="/{{ item.url }}" {% if selected_category.title == item.title %}class="is-active"{% endif %}>{{ item.title  }}</a>
+                                <a 
+                                    {% if query %}
+                                    href="/?q={{ query }}&category={{ item.url }}" {% if query_category.title == item.title %}class="is-active"{% endif %}
+                                    {% else %}
+                                    href="/{{ item.url }}" {% if selected_category.title == item.title %}class="is-active"{% endif %}
+                                    {% endif %}
+                                   >
+                                   {{ item.title  }}
+                                </a>
                                 {% endfor %}
                             </li>
                         </ul>
@@ -21,11 +35,17 @@
                 {% if query and not items %}
                 <div class="column">
                     <div class="columns is-multiline is-mobile">
-                        <div class="column is-6 is-offset-3">
+                        <div class="column is-10 is-offset-1">
                             <div class="content">
                                 <div class="notification">
                                     <a class="delete" href="{% url 'items_list' %}"></a>
-                                    <p>По запросу "{{ query  }}" ничего не найдено.</p>
+                                    <p>По запросу &laquo;{{ query  }}&raquo; {% if query_category %}в категории &laquo;{{ query_category.title }}&raquo; {% endif %}ничего не найдено.</p>
+                                    {% if query_category %}
+                                    <a href="{% url "items_list" %}?q={{ query }}" class="button is-outlined is-link">Поиск по всему каталогу</a>
+                                    {% else %}
+                                        <a class="button is-outlined is-link js-open-popup">Связаться со специалистом</a>
+                                    {% endif %}
+                                    </p>
                                 </div>
                             </div>
                         </div>

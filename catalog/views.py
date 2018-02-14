@@ -10,14 +10,18 @@ from orders.forms import OrderForm
 def items_list(request):
     items = Item.objects.filter(published=True, category__published=True).order_by('-created_date')
     category = Category.objects.filter(published=True).order_by('title')
+    order_form = OrderForm
     query = request.GET.get('q')
+    query_category = request.GET.get('category')
     if query:
         items = Item.objects.filter(
             Q(published=True),
             Q(title__icontains=query) |
             Q(description__icontains=query)
             ).distinct().order_by('-created_date')
-
+        if not query_category is None:
+            query_category = get_object_or_404(Category, url=query_category)
+            items = [ item for item in items if item.category.url==query_category.url ]
     paginator = Paginator(items,8)
     page = request.GET.get('page')
     try:
@@ -27,18 +31,13 @@ def items_list(request):
     except EmptyPage:
         items = paginator.page(paginator.num_pages)
     context = {
+        'query_category' : query_category,
+        'order_form' : order_form,
         'query' : query,
         'items': items,
         'category': category
     }
     return render(request, 'catalog/catalog_items.html', context)
-
-def details_list(request):
-    list_detail = Detail.objects.filter(published=True)
-    context = {
-        'items' : list_detail
-    }
-    return render(request, 'catalog/catalog_details.html', context)
 
 def items_by_category(request, category_url):
     selected_category = get_object_or_404(Category, url=category_url)
@@ -54,7 +53,7 @@ def items_by_category(request, category_url):
 
 def single_item(request, category_url, item_url):
     item = get_object_or_404(Item,url=item_url)
-    if not item.published or item.category.published: raise Http404
+    if not item.published or not item.category.published: raise Http404
     category = Category.objects.filter(published=True).order_by("title")
     details = Detail.objects.filter(items=item)
     order_form = OrderForm

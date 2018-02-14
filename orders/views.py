@@ -14,7 +14,8 @@ def get_order_form(request):
         if form.is_valid():
             is_valid = True
             order = form.save(commit=False)
-            order.item = Item.objects.get(pk=int(item_id))
+            if item_id:
+                order.item = Item.objects.get(pk=int(item_id))
             order.processed = False
             order.created_date = timezone.now()
             order.save()
@@ -26,7 +27,6 @@ def get_order_form(request):
 def export_orders_as_xls(modeladmin, request, queryset):
     response = HttpResponse(content_type='application/ms-excel')
     response['Content-Disposition'] = 'attachment; filename="orders.xls"'
-
     wb = xlwt.Workbook(encoding='utf-8')
     ws = wb.add_sheet('Заказы')
 
@@ -69,7 +69,10 @@ def export_orders_as_xls(modeladmin, request, queryset):
         ws.write(row_num, 0, obj.name, font_style)
         ws.write(row_num, 1, obj.phone, font_style)
         ws.write(row_num, 2, note, font_style)
-        ws.write(row_num, 3, obj.item.title, font_style)
+        if obj.item:
+            ws.write(row_num, 3, obj.item.title, font_style)
+        else:
+            ws.write(row_num, 3, 'Не выбран', font_style)
         ws.write(row_num, 4, processed, font_style)
         ws.write(row_num, 5, local_datetime, font_style)
 

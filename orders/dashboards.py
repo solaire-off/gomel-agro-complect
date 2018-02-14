@@ -9,7 +9,7 @@ class ModelItemList(widgets.ItemList):
     model = Order
     sortable = True
     width = '500'
-    list_display = ('#', 'name','phone','item', 'is_processed','ago')
+    list_display = ('#', 'name','phone','topic','description','is_processed','ago')
     list_display_links = ['name']
     empty_message = "Заявки отсутствуют"
 
@@ -22,6 +22,19 @@ class ModelItemList(widgets.ItemList):
             return 'Да'
         return 'Нет'
     is_processed.short_description = 'Принята'
+
+    def topic(self, obj):
+        if obj.item:
+            return obj.item.title
+        return 'Индивидуальный заказ'
+    topic.short_description = 'Тема'
+
+    def description(self, obj):
+        if obj.note:
+            return obj.note
+        return 'Отсутствует'
+    description.short_description = 'Примечание'
+
 
 class OrderDashboard(Dashboard):
     title = "Заявки"

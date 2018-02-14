@@ -9,62 +9,23 @@
         <link rel="stylesheet" href="{% static 'css/style.css' %}">
     </head>
 <body>
-    <section class="hero is-link">
-        <div class="hero-body">
-            <div class="container">
-                <div class="columns is-vcentred">
-                    <div class="column">
-                        <p class="title">ОАО «Гомельагрокомплект»</p>
-                        <p class="subtitle">
-                        247016, Республика Беларусь,<br/>
-                        г. Гомель, а/г Ерёмино, ул. Сурганова, 14<br/>
-                        Телефон: +375 (232) 93-36-66, Факс: +375 (232) 93-36-40
-                        </p>
-                    </div>
-                    <div class="column is-4">
-                        <div class="box">
-                            <div class="media">
-                                <div class="media-left">
-                                    <figure class="image">
-                                        <img src="{% static 'img/logo.png' %}" alt="">
-                                    </figure>
-                                </div>
-                                <div class="media-content">
-                                    <div class="content">
-                                        <p style="color:#4a4a4a" class="subtitle">К высокому качеству молока вместе с нами!</p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div> 
-            </div>
-        </div>
-        <div class="hero-foot">
-            <div class="container">
-                <nav class="tabs is-boxed">
-                    <ul>
-                        <li class="is-active"><a href="/">Каталог</a></li>
-                        {% if request.user.is_superuser %}
-                        <li><a href="{% url 'admin:index' %}">Панель админстратора</a></li>
-                        {% endif %}
-                    </ul>
-                </nav>
-            </div>
-        </div>
-    </section>
-
-
-    
     <nav class="navbar has-shadow">
         <div class="container">
             <div class="navbar-tabs">
-                <a class="navbar-item is-tab {% if category  %}is-active{% endif %}" href="{% url 'items_list' %}">Оборудование</a>
-                <a class="navbar-item is-tab {% if not category %}is-active{% endif %}" href="{% url 'details_list' %}">Запчасти</a>
+                <a class="navbar-item is-tab is-active" href="{% url 'items_list' %}">Продукция</a>
+                {% if request.user.is_superuser %}
+                <a class="navbar-item is-tab" href="{% url 'admin:index' %}">Панель админстратора</a>
+                {% endif %}
             </div>
             <div class="navbar-end">
                 <div class="navbar-item">
-                    <form action="/" method="GET">
+                {% if query_category %}
+                <form action="{% url 'items_list' %}" method="GET">
+                {% elif selected_category %}
+                <form action="{% url 'items_list' %}" method="GET">
+                {% else %}
+                <form action="{% url 'items_list' %}" method="GET">
+                {% endif %}
                     <div class="field is-grouped">
                         <div class="field is-horizontal">
                             <div class="field-label is-normal">
@@ -74,6 +35,11 @@
                                 <div class="field has-addons">
                                     <p class="control">
                                     <input required class="input" type="text" name="q" {% if query %} value="{{ query}}" {% endif %}  placeholder="Например, МКП-600">
+                                    {% if query_category %}
+                                    <input type="hidden" name="category" value="{{ query_category.url }}">
+                                    {% elif selected_category %}
+                                    <input type="hidden" name="category" value="{{ selected_category.url }}">
+                                    {% endif %}
                                     </p>
                                     <div class="control">
                                         {% if query %}
@@ -100,6 +66,16 @@
     {% block content %}
     {% endblock %}
     
+    <div id="contact-popup" class="modal">
+        <div class="modal-content">
+            <div class="modal-header content">
+                <p class="title is-4 has-text-centered has-text-white">Отправить заявку</p>
+            </div>
+            <div class="modal-body">
+                {% include "orders/order_form.html" with form=order_form item=item %}
+            </div>
+        </div>
+    </div>
     <script src="{% static 'js/libs/imask.min.js' %}"></script>
     <script src="{% static 'js/script.js' %}"></script>
 
