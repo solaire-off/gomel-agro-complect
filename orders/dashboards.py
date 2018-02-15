@@ -7,11 +7,14 @@ class ModelItemList(widgets.ItemList):
     changelist_url = Order
     limit_to = 20
     model = Order
-    sortable = True
+    sortable = False
     width = '500'
     list_display = ('#', 'name','phone','topic','description','is_processed','ago')
     list_display_links = ['name']
     empty_message = "Заявки отсутствуют"
+
+    def get_queryset(self):
+        return Order.objects.all().order_by('-created_date')
 
     def ago(self, obj):
         return timesince(obj.created_date)

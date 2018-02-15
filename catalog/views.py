@@ -41,7 +41,7 @@ def items_list(request):
 
 def items_by_category(request, category_url):
     selected_category = get_object_or_404(Category, url=category_url)
-    items = Item.objects.filter(category=selected_category).order_by('-created_date')
+    items = Item.objects.filter(category=selected_category, published=True).order_by('-created_date')
     category = Category.objects.filter(published=True).order_by('title')
     context = {
         'category':category,
@@ -55,7 +55,7 @@ def single_item(request, category_url, item_url):
     item = get_object_or_404(Item,url=item_url)
     if not item.published or not item.category.published: raise Http404
     category = Category.objects.filter(published=True).order_by("title")
-    details = Detail.objects.filter(items=item)
+    details = Detail.objects.filter(items=item, published=True)
     order_form = OrderForm
     context = {
         'item':item,
