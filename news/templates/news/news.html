@@ -1,0 +1,32 @@
+{% extends 'catalog/base.html' %}
+{% block title %}Новости | ОАО «Гомельагрокомплект»{% endblock %}
+{% block menu_news %}is-active{%endblock %}
+{% block content %}
+<section class="section">
+        <div class="container">
+            <div class="columns">
+                <div class="news column is-10 is-offset-1">
+                    {% for item in news %}
+                    <div class="card">
+                        <div class="card-content">
+                            <p class="title">
+                                {{ item.title }}
+                            </p>
+                            {% if item.tags.all %}
+                            <p class="subtitle">
+                            {% for tag in item.tags.all %}
+                                <a href="/news/{{ tag.url }}">@{{ tag.title }}</a>
+                            {% endfor %}
+                            &mdash;
+                            <span>{{ item.created_date |date:"SHORT_DATE_FORMAT" }}</span>
+                            </p>
+                            {% endif %}
+                            {{ item.content | safe }}
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </section>
+{% endblock %}

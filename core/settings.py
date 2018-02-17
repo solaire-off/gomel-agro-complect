@@ -36,6 +36,7 @@ ALLOWED_HOSTS = [
 INSTALLED_APPS = [
     'catalog',
     'orders',
+    'news',
 
     'ckeditor',
     'flat_responsive',

@@ -95,3 +95,6 @@
 .overflow-hidden{
     overflow: hidden;
 }
+.news .card:not(:first-child){
+    margin-top: 2rem;
+}

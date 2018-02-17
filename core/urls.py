@@ -26,8 +26,9 @@ urlpatterns = [
     url(r'^ckeditor/', include('ckeditor_uploader.urls')),
     url(r'^export/users/xls/$', views.export_users_xls, name='export_users_xls'),
     url(r'^export/catalog/xls/$', views.export_catalog_xls, name='export_catalog_xls'),
+    url(r'', include('news.urls')),
     url(r'', include('catalog.urls')),
-    url(r'', include('orders.urls'))
+    url(r'', include('orders.urls')),
 ]
 
 

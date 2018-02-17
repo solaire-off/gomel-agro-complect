@@ -12,7 +12,8 @@
     <nav class="navbar has-shadow">
         <div class="container">
             <div class="navbar-tabs">
-                <a class="navbar-item is-tab is-active" href="{% url 'items_list' %}">Продукция</a>
+                <a class="navbar-item is-tab {% block menu_news %}{% endblock %}" href="{% url 'news_list' %}">Новости</a>
+                <a class="navbar-item is-tab {% block menu_catalog %}{% endblock %}" href="{% url 'items_list' %}">Продукция</a>
                 {% if request.user.is_superuser %}
                 <a class="navbar-item is-tab" href="{% url 'admin:index' %}">Панель админстратора</a>
                 {% endif %}
