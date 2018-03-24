@@ -1,37 +1,39 @@
 {% extends 'catalog/base.html' %}
 {% block title %}{{ item.title }} | ОАО «Гомельагрокомплект»{% endblock %}
 {% block menu_catalog %}is-active{% endblock %}
+{% block breadcrumb %}
+  <nav class="breadcrumb is-centered" aria-label="breadcrumbs">
+  <ul>
+    <li><a href="#">Главная страница</a></li>
+    {% if item %}
+    <li><a href="{% url 'items_list' %}" aria-current="page">Каталог</a></li>
+    <li><a href="{% url 'items_list' %}{{ item.category.url }}" aria-current="page">{{ item.category.title }}</a></li>
+    <li class="is-active"><a href="{% url 'items_list' %}{{ item.category.url }}{{ item.url }}" aria-current="page">{{ item.title }}</a></li>
+    {% else %}
+    <li class="is-active"><a href="#" aria-current="page">Каталог</a></li>
+    {% endif %}
+  </ul>
+</nav>  
+{% endblock %}
 {% block content %}
-<section class="section">
+<section class="section is-main">
     <div class="container">
         <div class="columns">
-            <div class="column is-3-tablet is-2-desktop">
-                <aside class="menu">
-                    <p class="menu-label">Категории {% if selected_category %}<a style="float:right" href="{% url 'items_list' %}">СБРОСИТЬ</a>{% endif %}</p>
-                    <ul class="menu-list">
-                        <li>
-                            {% for item in category %}
-                            <a href="/{{ item.url }}" {% if selected_category.title == item.title %}class="is-active"{% endif %}>{{ item.title  }}</a>
-                            {% endfor %}
-                        </li>
-                    </ul>
-                </aside>
+            <div class="column is-4">
+                <div class="box">
+                    <figure class="image">
+                        <img src="{{ item.image.url }}" alt="{{ item.title }}">
+                    </figure>
+                </div>
             </div>
-            <div class="column">
+            <div class="column ">
                 <div class="box">
                     <article class="media">
-                        {% if item.image %}
-                        <div class="media-left">
-                            <figure class="image is-3by4 item-img">
-                                <img src="{{ item.image.url }}" alt="{{ item.title }}">
-                            </figure>
-                            <p class="item-order"><button class="button is-link is-small is-outlined js-open-popup">Оставить заявку</button></p>
-                        </div>
-                        {% endif %}
                         <div class="media-content">
-                            <div class="content"><strong>{{ item.title  }}</strong> <br/>{{ item.description | safe }}</div>
+                            <div class="content">
+                            <h1 class="item-title title is-3">{{ item.title  }}</h1> <br/>{{ item.description | safe }}</div>
                         </div>
-                    </article>
+                </article>
                 </div>
             </div>
         </div>
@@ -64,6 +66,5 @@
         {% endif %}
     </div>
 </section>
-
 
 {% endblock %}

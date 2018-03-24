@@ -1,8 +1,24 @@
 {% extends 'catalog/base.html' %}
 {% block title %}Оборудование | ОАО «Гомельагрокомплект»{% endblock %}
 {% block menu_catalog %}is-active{%endblock %}
+
+
+{% block breadcrumb %}
+  <nav class="breadcrumb is-centered" aria-label="breadcrumbs">
+  <ul>
+    <li><a href="#">Главная страница</a></li>
+    {% if  selected_category %}
+    <li><a href="{% url 'items_list' %}" aria-current="page">Каталог</a></li>
+    <li class="is-active"><a href="{% url 'items_list' %}/{{ selected_category.url }}" aria-current="page">{{ selected_category.title }}</a></li>
+    {% else %}
+    <li class="is-active"><a href="#" aria-current="page">Каталог</a></li>
+    {% endif %}
+  </ul>
+</nav>  
+{% endblock %}
+
 {% block content %}
-<section class="section">
+<section class="section is-main">
         <div class="container">
             <div class="columns">
                 {% if category %}
@@ -58,18 +74,18 @@
                     <div class="columns is-multiline is-mobile">
                     {% for item in items %}
                     <div class="column {% if category %}is-6{% else %}is-4{% endif %}">
-                        <div class="box">
-                        <article class="media">
+                        <div class="box box-link">
+                        <a href="/{{ item.category.url }}/{{ item.url}}" class="media">
                             {% if item.image %}
                             <div class="media-left">
                                 <figure class="image item-img"><img src="{{ item.image.url }}" alt="{{ item.title }}"></figure>
                             </div>
                             {% endif %}
                             <div class="media-content">
-                                <div class="content"><strong>{{ item.title  }}</strong> <br/>{{ item.description | safe | truncatechars:100  }}
-                                    <p><a class=" is-small item-next" href="/{{ item.category.url }}/{{ item.url}}">Подробнее</a></p></div>
+                                <div class="content"><strong>{{ item.title  }}</strong> <br/>{{ item.description | safe | truncatechars:130  }}
+                                </div>
                             </div>
-                        </article>
+                        </a>
                         </div>
                     </div>
                     {% endfor %}

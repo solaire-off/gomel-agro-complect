@@ -1,11 +1,24 @@
 {% extends 'catalog/base.html' %}
 {% block title %}Новости | ОАО «Гомельагрокомплект»{% endblock %}
 {% block menu_news %}is-active{%endblock %}
+{% block breadcrumb %}
+  <nav class="breadcrumb is-centered" aria-label="breadcrumbs">
+  <ul>
+    <li><a href="#">Главная страница</a></li>
+    {% if selected_category %}
+    <li><a href="{% url 'items_list' %}" aria-current="page">Каталог</a></li>
+    <li class="is-active"><a href="{% url 'items_list' %}/{{ selected_category.url }}" aria-current="page">{{ selected_category.title }}</a></li>
+    {% else %}
+    <li class="is-active"><a href="#" aria-current="page">Новости</a></li>
+    {% endif %}
+  </ul>
+</nav>  
+{% endblock %}
 {% block content %}
-<section class="section">
+<section class="section is-main">
     <div class="container">
         <div class="columns">
-            <div class="news column is-10 is-offset-1">
+            <div class="news column is-8 ">
                 {% if selected_tag %}
                 <p class="title is-3">Метка: <span class="has-text-info has-text-weight-normal">@{{ selected_tag }}</span> <a href="{% url 'news_list' %}" title="Вернуться ко всем новостям" class="delete"></a></p>
                 {% endif %}
@@ -21,7 +34,7 @@
                         <a href="/news/{{ tag.url }}">@{{ tag.title }}</a>
                         {% endfor %}
                         &mdash;
-                        <span>{{ item.created_date |date:"SHORT_DATE_FORMAT" }}</span>
+                        <span>{{ item.created_date | date:"SHORT_DATE_FORMAT" }}</span>
                         </p>
                         {% endif %}
                         {{ item.content | safe }}

@@ -98,3 +98,64 @@
 .news .card:not(:first-child){
     margin-top: 2rem;
 }
+.content .item-title{
+    margin-bottom: 0;
+}
+.box.box-link:hover {
+      box-shadow: 0 0 15px rgba(33,33,33,.2); 
+}
+.box{
+    transition: box-shadow 0.5s;
+}
+.box > a{
+    color: inherit;
+}
+.menu-list a{
+    padding: 0.5rem 1rem;
+    border-radius: 1rem;
+    display: inline-block
+
+}
+.breadcrumb-wrap{
+    margin-top: 1rem;
+}
+.notification li.is-active a{
+    text-decoration: none;
+}
+.notification{
+    background: #f8f8f8;
+}
+.hero.is-link{
+    background: #004e94;
+    padding-bottom: 3rem;
+}
+.footer.hero{
+    padding-bottom: 3rem;
+}
+.navbar-center-logo{
+    position: absolute;
+    left: 50%;
+    margin-left: -2rem;
+    width: 4rem;
+    height: 100%;
+}
+.has-text-info{
+    color: #004e94 !important
+}
+.navbar-item.is-tab.is-active{
+    border-bottom-color: #004e94;
+    color: #004e94 ;
+}
+.button.is-info{
+    background: #0086ff;
+}
+.navbar-item.is-tab:hover,
+.navbar-item.is-tab:focus{
+    border-bottom-color: #004e94;
+}
+a.navbar-item:hover{
+    color: #004e94;
+}
+.section.is-main{
+    min-height: 75vh;
+}

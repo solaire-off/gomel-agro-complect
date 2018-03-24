@@ -12,12 +12,21 @@
     <nav class="navbar has-shadow">
         <div class="container">
             <div class="navbar-tabs">
+                <a class="navbar-item is-tab {% block menu_main %}{% endblock %}" href="{% url 'news_list' %}">
+<svg width="16" height="15" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path d="M257.5 445.1l-22.2 22.2c-9.4 9.4-24.6 9.4-33.9 0L7 273c-9.4-9.4-9.4-24.6 0-33.9L201.4 44.7c9.4-9.4 24.6-9.4 33.9 0l22.2 22.2c9.5 9.5 9.3 25-.4 34.3L136.6 216H424c13.3 0 24 10.7 24 24v32c0 13.3-10.7 24-24 24H136.6l120.5 114.8c9.8 9.3 10 24.8.4 34.3z"/></svg>
+</a>
                 <a class="navbar-item is-tab {% block menu_news %}{% endblock %}" href="{% url 'news_list' %}">Новости</a>
                 <a class="navbar-item is-tab {% block menu_catalog %}{% endblock %}" href="{% url 'items_list' %}">Продукция</a>
                 {% if request.user.is_superuser %}
                 <a class="navbar-item is-tab" href="{% url 'admin:index' %}">Панель админстратора</a>
                 {% endif %}
             </div>
+
+            <a class="navbar-item navbar-center-logo" href="/">
+                 <img src="{% static 'img/logo.png' %}" alt="Логотип ОАО Гомельагрокоплект" />
+            </a>
+
+            <!--  navbar search -->
             <div class="navbar-end">
                 <div class="navbar-item">
                 {% if query_category %}
@@ -60,12 +69,44 @@
                 </form>
                 </div>
             </div>
+            <!--  navbar search end -->
         </div>
     </nav>
-    
+    <div class="notification" style="margin-top: 2px">
+        <div class="container">
+            {% block breadcrumb %}
+            {% endblock %}
+        </div>
+    </div>
     
     {% block content %}
     {% endblock %}
+
+
+    <section class="footer hero is-link">
+      <div class="container">
+        <div class="columns is-vcentered">
+          <div class="column is-5">
+            <p class="title">Гомельагрокомплект</p>
+            <p class="subtitle">К высокому качеству молока &mdash; вместе с нами!</p>
+          </div>
+          <div class="column is-3">
+              <p>Новости предприятия</p>
+              <p>Каталог продукции</p>
+              <p>Предоставляемые услуги</p>
+              <p>О предприятии</p>
+          </div>
+          <div class="column is-4">
+              <p>
+              247016, Республика Беларусь,</br>
+              г. Гомель, а/г Ерёмино, ул. Сурганова, 14</br>
+              Телефон: +375 (232) 93-36-66,<br/>
+              Факс: +375 (232) 93-36-40
+              </p>
+          </div>
+        </div>
+      </div>
+    </section>
     
     <div id="contact-popup" class="modal">
         <div class="modal-content">
@@ -77,6 +118,8 @@
             </div>
         </div>
     </div>
+
+
     <script src="{% static 'js/libs/imask.min.js' %}"></script>
     <script src="{% static 'js/script.js' %}"></script>
 
