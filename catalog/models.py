@@ -2,6 +2,7 @@ from django.db import models
 from django.utils import timezone
 from transliterate import translit
 from django.template.defaultfilters import slugify
+from django.core.urlresolvers import reverse
 
 def TranslitToEn(text):
     return translit(text, 'ru', reversed=True).lower()
@@ -10,7 +11,7 @@ def UploadImageForItem(object,filename):
     return 'items/%s/%s'%(object.url, filename)
 
 def UploadImageForDetail(object,filename):
-    return 'items/%s/%s'%(object.url, filename)
+    return 'details/%s/%s'%(object.url, filename)
 
 def isBlank(myString):
     return not (myString and myString.strip())
@@ -28,6 +29,13 @@ class Item(models.Model):
     class Meta:
         verbose_name = 'Продукт'
         verbose_name_plural = 'Продукты'
+
+
+
+    def get_absolute_url(self):
+        return reverse('single_item',
+                        args=[self.category.url,
+                              self.url])
 
     def save(self, *args, **kwargs):
         if isBlank(self.url):
@@ -49,6 +57,10 @@ class Category(models.Model):
     class Meta:
         verbose_name = 'Категорию'
         verbose_name_plural = 'Категории'
+
+    def get_absolute_url(self):
+        return reverse('items_by_category',
+                        args=[self.url])
 
     def save(self, *args, **kwargs):
         if isBlank(self.url):

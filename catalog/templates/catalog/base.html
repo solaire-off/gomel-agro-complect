@@ -12,7 +12,7 @@
     <nav class="navbar has-shadow">
         <div class="container">
             <div class="navbar-tabs">
-                <a class="navbar-item is-tab {% block menu_main %}{% endblock %}" href="{% url 'news_list' %}">
+                <a class="navbar-item is-tab {% block menu_main %}{% endblock %}" href="{% url 'home_page' %}">
 <svg width="16" height="15" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path d="M257.5 445.1l-22.2 22.2c-9.4 9.4-24.6 9.4-33.9 0L7 273c-9.4-9.4-9.4-24.6 0-33.9L201.4 44.7c9.4-9.4 24.6-9.4 33.9 0l22.2 22.2c9.5 9.5 9.3 25-.4 34.3L136.6 216H424c13.3 0 24 10.7 24 24v32c0 13.3-10.7 24-24 24H136.6l120.5 114.8c9.8 9.3 10 24.8.4 34.3z"/></svg>
 </a>
                 <a class="navbar-item is-tab {% block menu_news %}{% endblock %}" href="{% url 'news_list' %}">Новости</a>
@@ -22,7 +22,7 @@
                 {% endif %}
             </div>
 
-            <a class="navbar-item navbar-center-logo" href="/">
+            <a class="navbar-item navbar-center-logo" href="{% url 'home_page' %}">
                  <img src="{% static 'img/logo.png' %}" alt="Логотип ОАО Гомельагрокоплект" />
             </a>
 

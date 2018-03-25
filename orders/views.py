@@ -5,7 +5,6 @@ from django.http import JsonResponse
 from catalog.models import Item
 import xlwt
 
-
 def get_order_form(request):
     is_valid = False
     if request.POST:

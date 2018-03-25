@@ -1,8 +1,18 @@
+from django.shortcuts import render
 from django.http import HttpResponse
 from django.contrib.auth.models import User
-from catalog.models import Detail, Item
+from catalog.models import Detail, Item, Category
+from news.models import News
 import xlwt
 
+def home_page(request):
+    news = News.objects.filter(published=True).order_by('-created_date')
+    category = Category.objects.filter(published=True).order_by('-created_date')
+    context = {
+            'news' : news,
+            'category' : category
+            }
+    return render(request, 'home.html', context)
 
 
 def export_users_xls(request):

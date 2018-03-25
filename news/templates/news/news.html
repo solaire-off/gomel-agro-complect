@@ -4,7 +4,7 @@
 {% block breadcrumb %}
   <nav class="breadcrumb is-centered" aria-label="breadcrumbs">
   <ul>
-    <li><a href="#">Главная страница</a></li>
+    <li><a href="{% url 'home_page' %}">Главная страница</a></li>
     {% if selected_category %}
     <li><a href="{% url 'items_list' %}" aria-current="page">Каталог</a></li>
     <li class="is-active"><a href="{% url 'items_list' %}/{{ selected_category.url }}" aria-current="page">{{ selected_category.title }}</a></li>

@@ -6,7 +6,7 @@
 {% block breadcrumb %}
   <nav class="breadcrumb is-centered" aria-label="breadcrumbs">
   <ul>
-    <li><a href="#">Главная страница</a></li>
+    <li><a href="{% url 'home_page' %}">Главная страница</a></li>
     {% if  selected_category %}
     <li><a href="{% url 'items_list' %}" aria-current="page">Каталог</a></li>
     <li class="is-active"><a href="{% url 'items_list' %}/{{ selected_category.url }}" aria-current="page">{{ selected_category.title }}</a></li>
@@ -36,9 +36,9 @@
                                 {% for item in category %}
                                 <a 
                                     {% if query %}
-                                    href="/?q={{ query }}&category={{ item.url }}" {% if query_category.title == item.title %}class="is-active"{% endif %}
+                                    href="{% url 'catalog_items' %}?q={{ query }}&category={{ item.url }}" {% if query_category.title == item.title %}class="is-active"{% endif %}
                                     {% else %}
-                                    href="/{{ item.url }}" {% if selected_category.title == item.title %}class="is-active"{% endif %}
+                                    href="{{ item.get_absolute_url }}" {% if selected_category.title == item.title %}class="is-active"{% endif %}
                                     {% endif %}
                                    >
                                    {{ item.title  }}
@@ -75,7 +75,7 @@
                     {% for item in items %}
                     <div class="column {% if category %}is-6{% else %}is-4{% endif %}">
                         <div class="box box-link">
-                        <a href="/{{ item.category.url }}/{{ item.url}}" class="media">
+                        <a href="{{ item.get_absolute_url }}" class="media">
                             {% if item.image %}
                             <div class="media-left">
                                 <figure class="image item-img"><img src="{{ item.image.url }}" alt="{{ item.title }}"></figure>
