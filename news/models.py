@@ -1,4 +1,5 @@
 from django.db import models
+from django.core.urlresolvers import reverse
 from django.utils import timezone
 from django.template.defaultfilters import slugify
 from transliterate import translit
@@ -18,6 +19,10 @@ class Tag(models.Model):
     class Meta:
         verbose_name = 'Метку'
         verbose_name_plural = 'Метки'
+
+
+    def get_absolute_url(self):
+        return reverse('news_by_tag', args=[self.url])
 
     def save(self, *args, **kwargs):
         if isBlank(self.url):

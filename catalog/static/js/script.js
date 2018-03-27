@@ -150,5 +150,27 @@ document.addEventListener("DOMContentLoaded", function() {
             });
         });
     }
+	window.addEventListener('scroll', function (e) {
+        var nav = document.getElementById('js-navbar');
+        if (document.documentElement.scrollTop || document.body.scrollTop > window.innerHeight) {
+                nav.classList.remove('is-transparent');
+            } else {
+                nav.classList.add('is-transparent');
+            }
+    });
+
+	var trigger = new ScrollTrigger({
+		  toggle: {
+			visible: 'js-visible',
+			hidden: 'js-invisible'
+		  },
+		  offset: {
+			x: 0,
+			y: -350
+		  },
+		  addHeight: true,
+		  once: true
+		}, document.body, window);
+
 })
 

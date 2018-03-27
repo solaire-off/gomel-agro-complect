@@ -4,6 +4,8 @@
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="shortcut icon" href="{% static 'img/favicon.ico' %}" type="image/x-icon">
+        <link rel="icon" href="{% static 'img/favicon.ico' %}" type="image/x-icon">
         <title>{% block title %}{% endblock %}</title>
         <link rel="stylesheet" href="{% static 'css/libs/bulma.min.css' %}">
         <link rel="stylesheet" href="{% static 'css/style.css' %}">
@@ -83,30 +85,7 @@
     {% endblock %}
 
 
-    <section class="footer hero is-link">
-      <div class="container">
-        <div class="columns is-vcentered">
-          <div class="column is-5">
-            <p class="title">Гомельагрокомплект</p>
-            <p class="subtitle">К высокому качеству молока &mdash; вместе с нами!</p>
-          </div>
-          <div class="column is-3">
-              <p>Новости предприятия</p>
-              <p>Каталог продукции</p>
-              <p>Предоставляемые услуги</p>
-              <p>О предприятии</p>
-          </div>
-          <div class="column is-4">
-              <p>
-              247016, Республика Беларусь,</br>
-              г. Гомель, а/г Ерёмино, ул. Сурганова, 14</br>
-              Телефон: +375 (232) 93-36-66,<br/>
-              Факс: +375 (232) 93-36-40
-              </p>
-          </div>
-        </div>
-      </div>
-    </section>
+    {% include 'footer.html' %}
     
     <div id="contact-popup" class="modal">
         <div class="modal-content">

@@ -1,3 +1,6 @@
+html{
+    scroll-behavior: smooth
+}
 #section-header{
     background: linear-gradient(to right, rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)), url(/static/img/agro-bg.jpg);
     background-repeat: repeat;
@@ -6,6 +9,9 @@
     background-size: cover;
     background-position-y: 10%;
     background-repeat: no-repeat;
+
+
+    min-height: 100vh;
 }
 .image img{
     width:100%;
@@ -148,6 +154,21 @@
     width: 4rem;
     height: 100%;
 }
+.navbar-name-logo{
+    position: relative;
+    transition: top 0.3s ease 0.3s, opacity 0.3s ease 0.3s !important;
+    left: 0;
+    top: 0;
+    opacity: 1;
+    background: transparent;
+}
+.navbar.is-transparent .navbar-name-logo{
+    opacity: 0;
+    top: -3rem;
+}
+.home-page .navbar-name-logo::after{
+    content: none !important
+}
 .has-text-info{
     color: #004e94 !important
 }
@@ -168,11 +189,31 @@ a.navbar-item:hover{
 .section.is-main{
     min-height: 75vh;
 }
+.home-page .navbar{
+    position: fixed;
+    width: 100%;
+    z-index: 25;
+    background-color: white;
+    -webkit-transition: background-color 300ms linear;
+        -ms-transition: background-color 300ms linear;
+            transition: background-color 300ms linear;
+
+}
+.home-page .navbar.is-transparent{
+    background-color: transparent;
+}
+.home-page .navbar.is-transparent .navbar-item{
+	color: white 
+}
+.home-page .navbar:not(.is-transparent) .navbar-item::after{
+	border-bottom-color: #004e94
+}
 .home-page .navbar-item{
     text-transform: uppercase;
     font-weight: 700;
     border-bottom-width: 0;
     position: relative;
+    transition: all 0.3s;
 }
 .home-page .navbar-item::after{
     content: '';
@@ -205,5 +246,27 @@ position: relative;
 .news-cards .card .card-content .content time{
     position: absolute;
     bottom: 1rem
+}
+#block-about{
+    padding-top: 5rem;
+}
+.js-invisible{
+	transition: opacity 0.5s ease;
+	opacity: 0.0;
+}
 
+.js-visible{
+	transition: opacity 0.5s ease;
+	opacity: 1.0;
+	animation: slide 0.6s;
+}
+@keyframes slide {
+    0% {
+        opacity: 0;
+        transform: translateY(30%);
+    } 
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    } 
 }

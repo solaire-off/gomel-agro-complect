@@ -31,7 +31,7 @@
                         {% if item.tags.all %}
                         <p class="subtitle">
                         {% for tag in item.tags.all %}
-                        <a href="/news/{{ tag.url }}">@{{ tag.title }}</a>
+                        <a href="{{ tag.get_absolute_url }}">@{{ tag.title }}</a>
                         {% endfor %}
                         &mdash;
                         <span>{{ item.created_date | date:"SHORT_DATE_FORMAT" }}</span>
