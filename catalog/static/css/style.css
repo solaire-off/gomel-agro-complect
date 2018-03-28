@@ -116,8 +116,31 @@ html{
 .content .item-title{
     margin-bottom: 0;
 }
-.box.box-link:hover {
+.box.box-link:hover,
+.box.box-link:focus{
       box-shadow: 0 0 15px rgba(33,33,33,.2); 
+}
+.box.box-link .item-img::after{
+    display: block;
+    opacity: 0;
+    z-index: -1;
+    content: "Подробнее";
+    color: white;
+    position: absolute;
+    width: 100%;
+    text-align: center;
+    background: black;
+    background: rgba(0,0,0,0.7);
+    bottom: 0;
+
+    transition: all 0.5s;
+}
+.box.box-link:hover .item-img::after,
+.box.box-link:focus .item-img::after{
+    display: block;
+    opacity: 1;
+    z-index: 1;
+    content: "Подробнее";
 }
 .box{
     transition: box-shadow 0.5s;
@@ -170,7 +193,7 @@ html{
     content: none !important
 }
 .has-text-info{
-    color: #004e94 !important
+    color: #3273dc !important
 }
 .navbar-item.is-tab.is-active{
     border-bottom-color: #004e94;
@@ -189,11 +212,14 @@ a.navbar-item:hover{
 .section.is-main{
     min-height: 75vh;
 }
-.home-page .navbar{
+.navbar{
     position: fixed;
     width: 100%;
     z-index: 25;
     background-color: white;
+    top: 0;
+}
+.home-page .navbar{
     -webkit-transition: background-color 300ms linear;
         -ms-transition: background-color 300ms linear;
             transition: background-color 300ms linear;
@@ -263,10 +289,16 @@ position: relative;
 @keyframes slide {
     0% {
         opacity: 0;
-        transform: translateY(30%);
+        transform: translateY(10%);
     } 
     100% {
         opacity: 1;
         transform: translateY(0);
     } 
+}
+#js-arrow > *{
+    transition: all 0.3s;
+}
+.is-up > *{
+    transform: rotate(90deg);
 }

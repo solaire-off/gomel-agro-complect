@@ -17,32 +17,32 @@
 {% block content %}
 <section class="section is-main">
     <div class="container">
-        <div class="columns">
-            <div class="news column is-8 ">
-                {% if selected_tag %}
-                <p class="title is-3">Метка: <span class="has-text-info has-text-weight-normal">@{{ selected_tag }}</span> <a href="{% url 'news_list' %}" title="Вернуться ко всем новостям" class="delete"></a></p>
-                {% endif %}
-                {% for item in news %}
-                <div class="card">
-                    <div class="card-content">
-                        <p class="title">
-                        {{ item.title }}
-                        </p>
-                        {% if item.tags.all %}
-                        <p class="subtitle">
-                        {% for tag in item.tags.all %}
-                        <a href="{{ tag.get_absolute_url }}">@{{ tag.title }}</a>
-                        {% endfor %}
-                        &mdash;
-                        <span>{{ item.created_date | date:"SHORT_DATE_FORMAT" }}</span>
-                        </p>
-                        {% endif %}
-                        {{ item.content | safe }}
-                    </div>
-                </div>
-                {% endfor %}
-            </div>
-        </div>
+		<div class="columns">
+			<div class="news column is-8 is-offset-2 ">
+				{% if selected_tag %}
+				<p class="title is-3">Метка: <span class="has-text-info has-text-weight-normal">#{{ selected_tag }}</span> <a href="{% url 'news_list' %}" title="Вернуться ко всем новостям" class="delete"></a></p>
+				{% endif %}
+				{% for item in news %}
+				<div class="card">
+					<div class="card-content">
+						<p class="title">
+						{{ item.title }}
+						</p>
+						{% if item.tags.all %}
+						<p class="subtitle">
+						{% for tag in item.tags.all %}
+						<a href="{{ tag.get_absolute_url }}">#{{ tag.title }}</a>
+						{% endfor %}
+						&mdash;
+						<span>{{ item.created_date | date:"SHORT_DATE_FORMAT" }}</span>
+						</p>
+						{% endif %}
+						{{ item.content | safe }}
+					</div>
+				</div>
+				{% endfor %}
+			</div>
+		</div>
     </div>
 </section>
 {% endblock %}

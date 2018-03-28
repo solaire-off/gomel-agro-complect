@@ -150,14 +150,59 @@ document.addEventListener("DOMContentLoaded", function() {
             });
         });
     }
-	window.addEventListener('scroll', function (e) {
-        var nav = document.getElementById('js-navbar');
-        if (document.documentElement.scrollTop || document.body.scrollTop > window.innerHeight) {
-                nav.classList.remove('is-transparent');
-            } else {
-                nav.classList.add('is-transparent');
+
+
+
+    var nav = document.getElementById('js-navbar');
+
+    if (typeof(nav) != 'undefined' && nav != null) {
+        window.addEventListener('scroll', function (e) {
+            if (document.documentElement.scrollTop || document.body.scrollTop > window.innerHeight ) {
+                    nav.classList.remove('is-transparent');
+                } else {
+                    nav.classList.add('is-transparent');
+                }
+        });
+    }
+
+
+
+
+    var arrow = document.getElementById('js-arrow');
+
+	function scrollTo(element, to, duration) {
+		if (duration <= 0) return;
+		var difference = to - element.scrollTop;
+		var perTick = difference / duration * 10;
+
+		setTimeout(function() {
+			element.scrollTop = element.scrollTop + perTick;
+			if (element.scrollTop === to) return;
+			scrollTo(element, to, duration - 10);
+		}, 10);
+	}
+
+
+    if (typeof(arrow) != 'undefined' && arrow != null) {
+        window.addEventListener('scroll', function (e) {
+            if (document.documentElement.scrollTop || document.body.scrollTop > window.innerHeight ) {
+                    arrow.classList.add('is-up');
+                } else {
+                    arrow.classList.remove('is-up');
+                }
+        });
+
+        arrow.addEventListener('click', function(e){
+            if (hasClass(arrow,'is-up')){
+                e.preventDefault();
+				window.scroll({ top: 0, left: 0, behavior: 'smooth' });
             }
-    });
+        });
+
+    }
+
+
+
 
 	var trigger = new ScrollTrigger({
 		  toggle: {
@@ -169,6 +214,7 @@ document.addEventListener("DOMContentLoaded", function() {
 			y: -350
 		  },
 		  addHeight: true,
+		  // centerVertical: true,
 		  once: true
 		}, document.body, window);
 

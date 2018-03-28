@@ -22,7 +22,7 @@
 					<a class="navbar-item is-tab" href="{% url 'items_list' %}">Продукция</a>
 					<a class="navbar-item is-tab" href="#">Услуги</a>
 					{% if request.user.is_superuser %}
-					<!-- <a class="navbar-item is-tab" href="{% url 'admin:index' %}">Панель админстратора</a> -->
+					<a class="navbar-item is-tab" href="{% url 'admin:index' %}"><i class="fa fa-lock"></i></a>
 					{% endif %}
 				</div>
 				<div class="navbar-end">
@@ -203,7 +203,7 @@
 							<figure class="image is-2by1"><img src="https://bulma.io/images/placeholders/640x320.png"></figure>
 						</div>
 					</div>
-					<div class="carousel-navigation is-centerd">
+					<div class="carousel-navigation is-centered">
 						<div class="carousel-nav-left">
 							<i class="fa fa-chevron-left" aria-hidden="true"></i>
 						</div>
@@ -231,7 +231,7 @@
 									<p class="title is-4">{{ item.title }}</p>
 									<p class="subtitle is-6">
 									{% for tag in item.tags.all %}
-									<a href="{{ tag.get_absolute_url }}">@{{ tag.title }}</a> 
+									<a href="{{ tag.get_absolute_url }}">#{{ tag.title }}</a> 
 									{% endfor %}
 									</p>
 								</div>
