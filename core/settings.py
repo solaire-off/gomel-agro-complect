@@ -28,20 +28,26 @@ DEBUG = True
 ALLOWED_HOSTS = [
         'localhost',
         '127.0.0.1',
+        '*',
         ]
 
 
 # Application definition
 
 INSTALLED_APPS = [
+    # Django apps
     'catalog',
     'orders',
     'news',
+    'service',
 
+    # Plugins
     'ckeditor',
+    'ckeditor_uploader',
     'flat_responsive',
     'controlcenter',
 
+    # Default
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -66,7 +72,7 @@ TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
         'DIRS': [os.path.join(BASE_DIR, 'templates')],
-        #'APP_DIRS': False,
+        # 'APP_DIRS': False,
         'OPTIONS': {
             'context_processors': [
                 'django.template.context_processors.debug',
@@ -142,6 +148,13 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 # CKEDITOR SETTING
 
 CKEDITOR_UPLOAD_PATH = "uploads/"
+
+CKEDITOR_CONFIGS = {
+    'default': {
+        'toolbar': 'full',
+        'height': 500,
+    },
+}
 
 
 # Dashboards

@@ -30,6 +30,7 @@ urlpatterns = [
     url(r'', include('news.urls')),
     url(r'', include('catalog.urls')),
     url(r'', include('orders.urls')),
+    url(r'', include('service.urls')),
 ]
 
 

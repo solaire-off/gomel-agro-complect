@@ -1,0 +1,53 @@
+{% extends 'catalog/base.html' %}
+{% block title %}Услуги | ОАО «Гомельагрокомплект»{% endblock %}
+{% block menu_service %}is-active{% endblock %}
+{% block breadcrumb %}
+  <nav class="breadcrumb is-centered" aria-label="breadcrumbs">
+  <ul>
+    <li><a href="{% url 'home_page' %}">Главная страница</a></li>
+    <li><a href="{% url 'service_list' %}">Услуги</a></li>
+    <li><a href="{{ service.category.get_absolute_url }}">{{ service.category }}</a></li>
+    <li class="is-active"><a href="#" aria-current="page">{{ service.title }}</a></li>
+  </ul>
+</nav>  
+{% endblock %}
+{% block content %}
+<section class="section is-main">
+  <div class="container">
+    <div class="columns">
+      <div class="column is-3">
+        <aside class="menu">
+          <p class="menu-label">
+          Услуги 
+          </p>
+          <ul class="menu-list">
+            <li>
+              {% for item in category %}
+              <a href="{{ item.get_absolute_url }}" {% if selected_category.title == item.title %}class="is-active"{% endif %} >
+                {{ item.title  }}
+              </a>
+              {% endfor %}
+            </li>
+          </ul>
+        </aside>
+      </div>
+      <div class="service column is-9">
+        <div class="card">
+          <div class="card-content">
+            <div class="content">
+              {{ service.content | safe  }}
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- <div class="column is-2"> -->
+      <!--   <div class="box is-service-img"> -->
+      <!--     <figure class="image"> -->
+      <!--       <img src="{{ service.image.url }}" alt="{{ service.title }}"> -->
+      <!--     </figure> -->
+      <!--   </div> -->
+      <!-- </div> -->
+    </div>
+  </div>
+</section>
+{% endblock %}

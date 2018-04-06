@@ -2,7 +2,8 @@ from django import forms
 from ckeditor.widgets import CKEditorWidget
 from ckeditor_uploader.widgets import CKEditorUploadingWidget
 from django.utils.safestring import mark_safe
-from .models import Item, Category, Detail
+from .models import Service, Category
+
 
 class AdminImageWidget(forms.FileInput):
     """
@@ -22,26 +23,18 @@ class AdminImageWidget(forms.FileInput):
         output.append(super(AdminImageWidget, self).render(name, value, attrs))
         return mark_safe(''.join(output))
 
-
-class ItemAdminForm(forms.ModelForm):
-    description = forms.CharField(widget=CKEditorUploadingWidget(), label="Описание")
+class ServiceAdminForm(forms.ModelForm):
+    content = forms.CharField(required=False, widget=CKEditorUploadingWidget(), label="Контент")
     image =  forms.ImageField(label='Изображение', widget=AdminImageWidget)
 
     class Meta:
-        model = Item
+        model = Service
         fields = '__all__'
 
-
 class CategoryAdminForm(forms.ModelForm):
-    description = forms.CharField(required=False, widget=CKEditorUploadingWidget(), label="Описание")
+    description = forms.CharField(required=False, widget=CKEditorUploadingWidget(), label="Контент")
+    image =  forms.ImageField(label='Изображение', widget=AdminImageWidget)
 
     class Meta:
         model = Category
-        fields = '__all__'
-
-class DetailAdminForm(forms.ModelForm):
-    image =  forms.ImageField(label='Изображение', widget=AdminImageWidget)
-
-    class Meta:
-        model = Detail
         fields = '__all__'

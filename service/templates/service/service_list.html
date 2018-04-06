@@ -1,0 +1,106 @@
+{% extends 'catalog/base.html' %}
+{% block title %}Услуги | ОАО «Гомельагрокомплект»{% endblock %}
+{% block menu_service %}is-active{% endblock %}
+{% block breadcrumb %}
+  <nav class="breadcrumb is-centered" aria-label="breadcrumbs">
+  <ul>
+    <li><a href="{% url 'home_page' %}">Главная страница</a></li>
+    {% if selected_category %}
+    <li><a href="{% url 'service_list' %}">Услуги</a></li>
+    <li class="is-active"><a href="#" aria-current="page">{{ selected_category.title }}</a></li>
+    {% else %}
+    <li class="is-active"><a href="#" aria-current="page">Услуги</a></li>
+    {% endif %}
+  </ul>
+</nav>  
+{% endblock %}
+{% block content %}
+<section class="section is-main">
+  <div class="container">
+    <div class="columns">
+      <div class="column is-3">
+        <aside class="menu">
+          <p class="menu-label">
+          Услуги 
+          </p>
+          <ul class="menu-list">
+            <li>
+              {% for item in category %}
+              <a
+                href="{{ item.get_absolute_url }}" {% if selected_category.title == item.title %}class="is-active"{% endif %}
+              >
+              {{ item.title  }}
+              </a>
+                {% endfor %}
+            </li>
+          </ul>
+        </aside>
+      </div>
+      {% if service %}
+      <div class="service column is-9">
+      {% for item in service %}
+				<a class="box box-link" href="{{ item.get_absolute_url }}" >
+					<article class="media">
+						<div class="media-left">
+							<figure class="image service-image">
+                <img src="{{ item.image.url }}" alt="{{ item.title }}">
+							</figure>
+						</div>
+						<div class="media-content">
+							<div class="content">
+									<strong>{{ item.title }}</strong> 
+									<br/>
+									{{ item.description | linebreaks }}
+							</div>
+						</div>
+					</article>
+				</a>
+      {% endfor %}
+      </div>
+      {% elif selected_category %}
+      <div class="service column is-7">
+        <div class="card">
+          <div class="card-content">
+            <div class="content">
+              {{ selected_category.description | safe  }}
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="column is-2">
+        {% for image in selected_category.images.all %}
+        <div class="box is-service-side-img">
+          <figure class="image">
+            <img src="{{ image.image.url }}" alt="{{ selected_category.title }}">
+          </figure>
+        </div>
+      {% endfor %}
+      </div>
+      {% else %}
+      <div class="service column is-9">
+      {% for item in category %}
+				<a class="box box-link" href="{{ item.get_absolute_url }}" >
+					<article class="media">
+            {% if item.image %}
+						<div class="media-left">
+							<figure class="image service-image">
+                <img src="{{ item.image.url }}" alt="{{ item.title }}">
+							</figure>
+						</div>
+            {% endif %}
+						<div class="media-content">
+							<div class="content">
+									<strong>{{ item.title }}</strong> 
+									<br/>
+									{{ item.ceo_description }}
+							</div>
+						</div>
+					</article>
+				</a>
+      {% endfor %}
+      </div>
+      {% endif %}
+    </div>
+  </div>
+</section>
+{% endblock %}
