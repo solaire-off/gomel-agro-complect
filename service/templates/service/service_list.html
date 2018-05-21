@@ -14,6 +14,20 @@
   </ul>
 </nav>  
 {% endblock %}
+
+{% block modal-topic %}{% if selected_category %}{{ selected_category.title }}{% else %}Услуги{% endif %}{% endblock %}
+
+{% block navbar-end %}
+<div class="navbar-item">
+      <a class="button js-open-popup">
+        <span class="icon">
+          <i class="fa fa-phone" aria-hidden="true"></i>
+        </span>
+        <span>Получить консультацию</span>
+      </a>
+</div>
+{% endblock %}
+
 {% block content %}
 <section class="section is-main">
   <div class="container">

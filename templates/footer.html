@@ -2,14 +2,14 @@
             <div class="container">
                 <div class="columns is-vcentered">
                     <div class="column is-5">
-                        <p class="title">Гомельагрокомплект</p>
+                        <p class="title">&laquo;Гомельагрокомплект&raquo;</p>
                         <p class="subtitle">К высокому качеству молока &mdash; вместе с нами!</p>
                     </div>
                     <div class="column is-3">
-                        <p>Новости предприятия</p>
-                        <p>Каталог продукции</p>
-                        <p>Предоставляемые услуги</p>
-                        <p>О предприятии</p>
+                        <p><a href="{% url 'news_list' %}">Новости предприятия</a></p>
+                        <p><a href="{% url 'items_list' %}">Каталог продукции</a></p>
+                        <p><a href="{% url 'service_list' %}">Предоставляемые услуги</a></p>
+                        <p><a href="{% url 'home_page' %}#block-about">О предприятии</a></p>
                     </div>
                     <div class="column is-4">
                         <p>

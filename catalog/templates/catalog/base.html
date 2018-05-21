@@ -8,6 +8,7 @@
         <link rel="icon" href="{% static 'img/favicon.ico' %}" type="image/x-icon">
         <title>{% block title %}{% endblock %}</title>
         <link rel="stylesheet" href="{% static 'css/libs/bulma.min.css' %}">
+        <link rel="stylesheet" href="{% static 'css/libs/hint.css' %}">
         <link rel="stylesheet" href="{% static 'css/style.css' %}">
 		<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
     </head>
@@ -24,22 +25,17 @@
                 {% if request.user.is_superuser %}
                 <a class="navbar-item is-tab" href="{% url 'admin:index' %}"><i class="fa fa-lock"></i></a>
                 {% endif %}
+                <div class="navbar-item is-tab navbar-center-logo hint--bottom" aria-label="ОАО Гомельагрокоплект" >
+                     <img class="hint--bottom"  aria-label="ОАО &laquo;Гомельагрокомплект&raquo;"src="{% static 'img/logo.png' %}" alt="Логотип ОАО Гомельагрокоплект" />
+                </div>
             </div>
 
-            <div class="navbar-item navbar-center-logo" >
-                 <img src="{% static 'img/logo.png' %}" alt="Логотип ОАО Гомельагрокоплект" />
-            </div>
 
             <!--  navbar-right end -->
             <div class="navbar-end">
+              {% block navbar-end %}
                 <div class="navbar-item">
-                {% if query_category %}
                 <form action="{% url 'items_list' %}" method="GET">
-                {% elif selected_category %}
-                <form action="{% url 'items_list' %}" method="GET">
-                {% else %}
-                <form action="{% url 'items_list' %}" method="GET">
-                {% endif %}
                     <div class="field is-grouped">
                         <div class="field is-horizontal">
                             <div class="field-label is-normal">
@@ -72,6 +68,7 @@
                     </div>
                 </form>
                 </div>
+                {% endblock %}
             </div>
             <!--  navbar-right end -->
         </div>
@@ -86,7 +83,6 @@
     {% block content %}
     {% endblock %}
 
-
     {% include 'footer.html' %}
     
     <div id="contact-popup" class="modal">
@@ -95,7 +91,37 @@
                 <p class="title is-4 has-text-centered has-text-white">Отправить заявку</p>
             </div>
             <div class="modal-body">
-                {% include "orders/order_form.html" with form=order_form item=item %}
+              <form method="POST" id="order-form" action="{% url 'get_order_form' %}">
+                  {% csrf_token %}
+
+                  {{ form.non_field_errors }}
+
+                  {% for hidden_field in form.hidden_fields %}
+                      {{ hidden_field }}
+                  {% endfor %}
+
+                  <input type="hidden" name="topic" id="id_topic" value="{% block modal-topic %}{% endblock %}">
+                  
+                  {% for field in form.visible_fields %}
+                      <div class="field">
+                          <label class="label" for="id_{{ field.name }}">{{ field.label }}</label>
+                          <div class="control">
+                              {{ field  }}
+                          </div>
+                          {% if field.help_text %}
+                          <p class="help">{{ field.help_text | safe }}</p>
+                          {% endif %}
+                      </div>
+                  {% endfor %}
+                  <div class="field is-grouped">
+                      <div class="control">
+                          <button class="button is-link">Отправить</button>
+                      </div>
+                      <div class="control">
+                          <button type="button" class="button js-close-popup is-text">Закрыть</button>
+                      </div>
+                  </div>
+              </form>
             </div>
         </div>
     </div>

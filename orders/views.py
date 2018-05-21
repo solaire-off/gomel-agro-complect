@@ -9,12 +9,11 @@ def get_order_form(request):
     is_valid = False
     if request.POST:
         form = OrderForm(request.POST)
-        item_id = request.POST.get('item')
+        topic = request.POST.get('topic')
         if form.is_valid():
             is_valid = True
             order = form.save(commit=False)
-            if item_id:
-                order.item = Item.objects.get(pk=int(item_id))
+            order.topic = topic
             order.processed = False
             order.created_date = timezone.now()
             order.save()
@@ -35,7 +34,7 @@ def export_orders_as_xls(modeladmin, request, queryset):
     font_style.font.bold = True
 
 
-    columns = ['Имя', 'Телефон','Примечание','Товар','Принята','Дата']
+    columns = ['Имя', 'Телефон','Примечание','Тема','Принята','Дата']
 
     for col_num in range(len(columns)):
         ws.write(row_num, col_num, columns[col_num], font_style)

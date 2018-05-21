@@ -17,12 +17,15 @@
 </nav>  
 {% endblock %}
 
+{% block modal-topic %}Индивидуальный заказ{% endblock %}
+
+
 {% block content %}
 <section class="section is-main">
         <div class="container">
             <div class="columns">
                 {% if category %}
-                <div class="column is-3-tablet is-2-desktop">
+                <div class="column is-3-tablet is-3-desktop is-3-widescreen is-2-fullhd">
                     <aside class="menu">
                         <p class="menu-label">
                             {% if query %}
@@ -73,8 +76,8 @@
                 <div class="column">
                     <div class="columns is-multiline is-mobile">
                     {% for item in items %}
-                    <div class="column {% if category %}is-6{% else %}is-4{% endif %}">
-                        <a href="{{ item.get_absolute_url }}" class="box box-link">
+                    <div class="column is-12-mobile is-10-tablet is-6-fullhd is-10-widescreen is-10-desktop items" >
+                        <a href="{{ item.get_absolute_url }}" class="box box-link catalog-item">
                         <div class="media">
                             {% if item.image %}
                             <div class="media-left">

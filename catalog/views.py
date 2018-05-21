@@ -32,7 +32,7 @@ def items_list(request):
         items = paginator.page(paginator.num_pages)
     context = {
         'query_category' : query_category,
-        'order_form' : order_form,
+        'form' : order_form,
         'query' : query,
         'items': items,
         'category': category
@@ -61,7 +61,7 @@ def single_item(request, category_url, item_url):
         'item':item,
         'category':category,
         'details':details,
-        'order_form': order_form
+        'form': order_form
     }
     return render(request,'catalog/single_item.html', context)
 

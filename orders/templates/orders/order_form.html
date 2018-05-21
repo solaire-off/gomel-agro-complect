@@ -7,7 +7,11 @@
         {{ hidden_field }}
     {% endfor %}
 
-    <input type="hidden" name="item" id="item_id" value="{{ item.id }}">
+    {% if item %}
+      <input type="hidden" name="item" id="item_id" value="{{ item.id }}">
+    {% elif custom %}
+      <input type="hidden" name="custom_field" id="custom_id" value="{{ custom }}">
+    {% endif %}
     
     {% for field in form.visible_fields %}
         <div class="field">

@@ -1,6 +1,8 @@
 {% extends 'catalog/base.html' %}
 {% block title %}{{ item.title }} | ОАО «Гомельагрокомплект»{% endblock %}
 {% block menu_catalog %}is-active{% endblock %}
+
+{% block modal-topic %}{{ item.title }}{% endblock %}
 {% block breadcrumb %}
   <nav class="breadcrumb is-centered" aria-label="breadcrumbs">
   <ul>
@@ -25,6 +27,9 @@
                         <img src="{{ item.image.url }}" alt="{{ item.title }}">
                     </figure>
                 </div>
+                <p class="has-text-centered">
+                    <button class="item-order-buttom button js-open-popup is-light">Сделать заказ</button>
+                </p>
             </div>
             <div class="column ">
                 <div class="box">

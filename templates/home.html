@@ -21,12 +21,13 @@
 					<a class="navbar-item is-tab" href="{% url 'news_list' %}">Новости</a>
 					<a class="navbar-item is-tab" href="{% url 'items_list' %}">Продукция</a>
 					<a class="navbar-item is-tab" href="{% url 'service_list' %}">Услуги</a>
+					<a class="navbar-item is-tab" href="#block-contact">Контакты</a>
 					{% if request.user.is_superuser %}
 					<a class="navbar-item is-tab" href="{% url 'admin:index' %}"><i class="fa fa-lock"></i></a>
 					{% endif %}
-				</div>
-				<div class="navbar-end">
-					<div class="navbar-item navbar-name-logo" href="{% url 'home_page' %}">
+        </div>
+          <div class="navbar-end">
+					<div class="navbar-item navbar-name-logo">
 						<img src="{% static 'img/logo.png' %}" style="margin-right: 1rem;"  alt="Логотип ОАО Гомельагрокоплект" />
 						&laquo;Гомельагрокомплект&raquo;
 					</div>
@@ -43,7 +44,7 @@
 		</section>
 		<section id="block-about" class="section" data-scroll>
 			<div class="container">
-				<h2 class="title" style="text-align: center; margin-bottom: 2rem;">О предприятии</h2>
+				<h2 class="section-title title" >О предприятии</h2>
 				<div class="columns">
 					<div class="column is-6" style="display: flex; justify-content: center; align-items: center;">
 						<div class='carousel carousel-animated carousel-animate-slide' data-autoplay="true" data-delay="20000">
@@ -176,9 +177,43 @@
 				</div>
 			</div>
 		</section>
-		<section class="section notification" data-scroll>
+
+		<section id="block-news" class="section" data-scroll>
 			<div class="container">
-				<h2 class="title" style="text-align: center">Клиенты</h2>
+				<h2 class="section-title title" >Новости</h2>
+				<div class="news-cards">
+					{% for item in news %}
+					<div class="card">
+						<div class="card-content">
+							<div class="media">
+								<div class="media-content">
+									<p class="title is-4">{{ item.title }}</p>
+									<p class="subtitle is-6">
+									{% for tag in item.tags.all %}
+									<a href="{{ tag.get_absolute_url }}">#{{ tag.title }}</a> 
+									{% endfor %}
+									</p>
+								</div>
+							</div>
+
+							<div class="content">
+								<div class="card-text">
+									{{ item.content | safe  }}
+								</div>
+								<div class="">
+									<time datetime="2016-1-1">{{ item.created_date | date:"SHORT_DATE_FORMAT" }}</time>
+								</div>
+							</div>
+						</div>
+					</div>
+					{% endfor %}
+				</div>
+			</div>
+		</section>
+
+<section class="section notification" data-scroll>
+			<div class="container">
+				<h2 class="section-title title" >Наши друзья</h2>
 				<div class='carousel is-5 carousel-animated carousel-animate-slide'>
 					<div class='carousel-container'>
 						<div class='carousel-item is-active'>
@@ -214,47 +249,77 @@
 				</div>
 			</div>
 		</section>
-		<section class="section" data-scroll>
+  <section id="block-contact" class="section"  data-scroll>
 			<div class="container">
-				<h2 class="title" style="text-align: center">Новости</h2>
-				<div class="news-cards">
-					{% for item in news %}
-					<div class="card">
-						<!-- <div class="card-image"> -->
-						<!-- 	<figure class="image"> -->
-						<!-- 		<img src="https://bulma.io/images/placeholders/1280x960.png" alt="Placeholder image"> -->
-						<!-- 	</figure> -->
-						<!-- </div> -->
-						<div class="card-content">
-							<div class="media">
-								<div class="media-content">
-									<p class="title is-4">{{ item.title }}</p>
-									<p class="subtitle is-6">
-									{% for tag in item.tags.all %}
-									<a href="{{ tag.get_absolute_url }}">#{{ tag.title }}</a> 
-									{% endfor %}
-									</p>
-								</div>
-							</div>
+				<h2 class="section-title title">Контакты</h2>
+        <div class="columns">
+          <div class="column is-6-desktop">
+            <div class="content">
+              <h4 class="title is-4 has-text-centered has-text-weight-bold" >
+                Краткая информация
+              </h4>
+              <p> Общество с ограниченной ответственностью "Торговый дом "Гомельагрокомплект" </p>
+              <p> Регистрационный номер в Едином государственном регистре юридических лиц и индивидуальных предпринимателей 490778486, зарегистрировано Гомельским райисполкомом 04.07.2012 г.  </p>
 
-							<div class="content">
-								<div class="card-text">
-									{{ item.content | safe  }}
-								</div>
-								<div class="">
-									<time datetime="2016-1-1">{{ item.created_date | date:"SHORT_DATE_FORMAT" }}</time>
-								</div>
-							</div>
-						</div>
-					</div>
-					{% endfor %}
-				</div>
+              <p> Регистрационный номер (идентификационный код)  в реестре лизинговых организаций 10085, дата включения 27.02.2015 г.  </p>
+
+              <p> Размер уставного фонда Общества составляет 112 625,00 (Сто двенадцать тысяч шестьсот двадцать пять белорусских рублей 00 копеек).  </p>
+
+              <p> Участниками Общества являются; </p>
+
+              <ul>
+                <li>
+                  Открытое акционерное общество "Гомельагрокомплект";
+                </li>
+                <li>
+                  Открытое акционерное общество "Институт "Гомельагропромпроект",
+                </li>
+              </ul>
+              <p> Место нахождения: 247016, Гомельский район, агрогородок Еремино, ул. Сурганова, 14, ком.312 </p>
+              <p> Режим работы: пн.-птн. 8.30 - 17.00, перерыв: 12.30 - 13.00, тел./факс  8(0232) 99 17 23.  </p>
+              <p> Предприятие осуществляет свою деятельность с 2012 года. За это время Обществом налажены долгосрочные партнерские отношения с лизингополучателями, производителями и поставщиками предметов лизинга.  </p>
+            </div>
+          </div>
+          <div class="column is-6-desktop form-for-user">
+            <h4 class="title is-4 text-center">Форма обращения граждан</h4>
+            <form method="POST" class="columns is-multiline" id="order-form" action="{% url 'get_order_form' %}">
+              {% csrf_token %}
+              <input id="id_topic" name="topic" value="Обращения граждан" type="hidden">
+
+              <div class="column is-6 field">
+                <label class="label" for="id_name">Имя</label>
+                <div class="control">
+                  <input class="input" id="id_name" maxlength="100" name="name" required="" type="text">
+                </div>
+              </div>
+              <div class="column is-6 field">
+                <label class="label" for="id_phone">Телефон</label>
+                <div class="control">
+                  <input class="input js-phone-mask" id="id_phone" maxlength="100" name="phone" pattern=".{19}" required="" type="text">
+                </div>
+              </div>
+              <div class="column is-12">
+              <div class="field">
+                <label class="label" for="id_note">Тест обращения</label>
+                <div class="control">
+                  <textarea class="textarea" cols="40" id="id_note" maxlength="300" name="note" rows="5"></textarea>
+                </div>
+              </div>
+              <div class="has-text-centered field is-grouped">
+                <div class="control">
+                  <button class="button is-link">Отправить</button>
+                </div>
+              </div>
+              </div>
+            </form>
+          </div>
+        </div>
+				
 			</div>
 		</section>
 
-
-
 		{% include 'footer.html' %}
+
 
 		<script src="{% static 'js/libs/imask.min.js' %}"></script>
 		<script src="{% static 'js/libs/bulma-carousel.min.js' %}"></script>

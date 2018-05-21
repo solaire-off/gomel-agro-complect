@@ -14,6 +14,38 @@
   </ul>
 </nav>  
 {% endblock %}
+
+{% block navbar-end %}
+  <div class="navbar-item">
+  <form action="{% url 'news_list' %}" method="GET">
+      <div class="field is-grouped">
+          <div class="field is-horizontal">
+              <div class="field-label is-normal">
+                  <label class="label">Поиск</label>
+              </div>
+              <div class="field-body">
+                  <div class="field has-addons">
+                      <p class="control">
+                      <input required class="input" type="text" name="q" {% if query %} value="{{ query}}" {% endif %}  placeholder="Например, собрание">
+                      </p>
+                      <div class="control">
+                          {% if query %}
+                          <a href="{% url 'news_list' %}" class="button is-danger">
+                              Сброс
+                          </a>
+                          {% else %}
+                          <button class="button is-info">
+                              Искать
+                          </button>
+                          {% endif %}
+                      </div>
+                  </div>
+              </div>
+          </div>
+      </div>
+  </form>
+  </div>
+  {% endblock %}
 {% block content %}
 <section class="section is-main">
     <div class="container">
@@ -21,10 +53,17 @@
 			<div class="news column is-8 is-offset-2 ">
 				{% if selected_tag %}
 				<p class="title is-3">Метка: <span class="has-text-info has-text-weight-normal">#{{ selected_tag }}</span> <a href="{% url 'news_list' %}" title="Вернуться ко всем новостям" class="delete"></a></p>
+        {% elif query %}
+				<p class="title is-3">Поиск: <span class="has-text-info has-text-weight-normal">{{ query }}</span> <a href="{% url 'news_list' %}" title="Вернуться ко всем новостям" class="delete"></a></p>
+
+        {% if not news %}
+				<p class="subtitle is-5">По вашему запросу ничего не найдено</p>
+        {% endif %}
 				{% endif %}
+
 				{% for item in news %}
 				<div class="card">
-					<div class="card-content">
+					<div class="card-content content">
 						<p class="title">
 						{{ item.title }}
 						</p>

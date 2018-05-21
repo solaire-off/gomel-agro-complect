@@ -68,9 +68,12 @@ document.addEventListener("DOMContentLoaded", function() {
             }
         }
 
+    }
+
+    if (document.getElementById('id_phone')){
         $phoneMask = new IMask(document.getElementById('id_phone'), { mask: '+{375} (00) 000-00-00'});
 
-    }
+      }
 
     function postAjax(url, data, success) {
         var params = typeof data == 'string' ? data : Object.keys(data).map(
@@ -98,6 +101,9 @@ document.addEventListener("DOMContentLoaded", function() {
     $orderForm = document.getElementById('order-form');
 
     if ($orderForm){
+
+        $hasThanksPopup = (hasClass($orderForm, 'has-thanks-popup')) ?  true : false;
+
         $orderForm.addEventListener("submit", function(e){
             e.preventDefault();    //stop form from submitting
             $url   = $orderForm.action;
@@ -106,12 +112,15 @@ document.addEventListener("DOMContentLoaded", function() {
             $phone = $orderForm.elements["phone"].value;
             $note  = $orderForm.elements["note"].value;
             // get value in hidden field
-            $item  = document.getElementById("item_id").value;
+
+
+            $topic = document.getElementById('id_topic') ? document.getElementById('id_topic').value : '' ;
+
             postAjax($url,{
                 name: $name,
                 phone: $phone,
                 note: $note,
-                item : $item,
+                topic : $topic,
                 csrfmiddlewaretoken: $token
             }, function(data){
                 $data = JSON.parse(data);
@@ -119,6 +128,7 @@ document.addEventListener("DOMContentLoaded", function() {
                     console.log("Successful sending")
 
                     $orderForm.reset();
+
                     // $contactPopup.style.display = 'none';
 
 
@@ -126,15 +136,7 @@ document.addEventListener("DOMContentLoaded", function() {
                     $orderForm.parentElement.insertAdjacentHTML('afterbegin', '<div class="notification is-link"><button class="delete js-close-popup"></button>' + successMessage  + '</div>');
                     $newDeleteButtons = document.querySelector('.delete');
 
-
-
                     $newNotification  = $newDeleteButtons.parentElement;
-
-                    // $newDeleteButtons.addEventListener('click', function() {
-                    //     $newNotification.remove();
-                    //     $contactPopup.style.display = 'none';
-                    //     toggleClass($html, 'overflow-hidden');
-                    // });
 
                     document.addEventListener('click', function (e) {
                         if (hasClass(e.target, 'delete')) {
@@ -159,8 +161,10 @@ document.addEventListener("DOMContentLoaded", function() {
         window.addEventListener('scroll', function (e) {
             if (document.documentElement.scrollTop || document.body.scrollTop > window.innerHeight ) {
                     nav.classList.remove('is-transparent');
+                    nav.classList.add('has-shadow');
                 } else {
                     nav.classList.add('is-transparent');
+                    nav.classList.remove('has-shadow');
                 }
         });
     }

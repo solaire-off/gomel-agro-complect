@@ -47,6 +47,10 @@ INSTALLED_APPS = [
     'flat_responsive',
     'controlcenter',
 
+
+    # DEV
+    'livereload',
+
     # Default
     'django.contrib.admin',
     'django.contrib.auth',
@@ -64,6 +68,9 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+
+    #DEV
+    'livereload.middleware.LiveReloadScript',
 ]
 
 ROOT_URLCONF = 'core.urls'
