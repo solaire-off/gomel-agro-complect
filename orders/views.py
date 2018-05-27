@@ -10,10 +10,12 @@ def get_order_form(request):
     if request.POST:
         form = OrderForm(request.POST)
         topic = request.POST.get('topic')
+        category = request.POST.get('category')
         if form.is_valid():
             is_valid = True
             order = form.save(commit=False)
             order.topic = topic
+            order.category = category
             order.processed = False
             order.created_date = timezone.now()
             order.save()
@@ -67,17 +69,14 @@ def export_orders_as_xls(modeladmin, request, queryset):
         ws.write(row_num, 0, obj.name, font_style)
         ws.write(row_num, 1, obj.phone, font_style)
         ws.write(row_num, 2, note, font_style)
-        if obj.item:
-            ws.write(row_num, 3, obj.item.title, font_style)
-        else:
-            ws.write(row_num, 3, 'Не выбран', font_style)
+        ws.write(row_num, 3, obj.topic, font_style)
         ws.write(row_num, 4, processed, font_style)
         ws.write(row_num, 5, local_datetime, font_style)
 
         if len(note) > 29 :
             note_hight = round(len(note) / 30)
             ws.row(row_num).height_mismatch = True
-            ws.row(row_num).height = 255 * (note_hight)
+            ws.row(row_num).height = 265 * (note_hight)
 
     for col_num in range(len(max_col_width)):
         ws.col(col_num).width = (max_col_width[col_num]+1) * 280

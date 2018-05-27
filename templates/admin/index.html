@@ -1,12 +1,12 @@
 {% extends "admin/base_site.html" %}
-{% load i18n static %}
+{% load i18n static sort_apps %}
 
 {% block extrastyle %}
 {{ block.super }}
 <link rel="stylesheet" type="text/css" href="{% static "admin/css/dashboard.css" %}" />
 <style>
 #recent-actions-module{
-    display: none
+    /*display: none*/
 }
 .admin-menu{
     display: flex;
@@ -17,7 +17,7 @@
     padding: 8px 35px;
     }
 body:not(.app-orders) .app-orders{
-    display: none
+    /*display: none*/
 }
 </style>
 {% endblock %}
@@ -39,7 +39,7 @@ body:not(.app-orders) .app-orders{
 {% endif %}
  
 {% if app_list %}
-    {% for app in app_list %}
+    {% for app in app_list|sort_apps %}
     <div class="app-{{ app.app_label }} module">
         <table>
         <caption>

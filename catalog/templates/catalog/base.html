@@ -25,9 +25,9 @@
                 {% if request.user.is_superuser %}
                 <a class="navbar-item is-tab" href="{% url 'admin:index' %}"><i class="fa fa-lock"></i></a>
                 {% endif %}
-                <div class="navbar-item is-tab navbar-center-logo hint--bottom" aria-label="ОАО Гомельагрокоплект" >
-                     <img class="hint--bottom"  aria-label="ОАО &laquo;Гомельагрокомплект&raquo;"src="{% static 'img/logo.png' %}" alt="Логотип ОАО Гомельагрокоплект" />
-                </div>
+                <a href="{% url 'home_page' %}" class="navbar-item is-tab navbar-center-logo hint--bottom" aria-label="ОАО &laquo;Гомельагрокомплект&raquo;" >
+                     <img src="{% static 'img/logo.png' %}" alt="Логотип ОАО Гомельагрокоплект" />
+                </a>
             </div>
 
 
@@ -91,7 +91,7 @@
                 <p class="title is-4 has-text-centered has-text-white">Отправить заявку</p>
             </div>
             <div class="modal-body">
-              <form method="POST" id="order-form" action="{% url 'get_order_form' %}">
+              <form method="POST" id="order-form" class="js-form" action="{% url 'get_order_form' %}">
                   {% csrf_token %}
 
                   {{ form.non_field_errors }}
@@ -101,6 +101,8 @@
                   {% endfor %}
 
                   <input type="hidden" name="topic" id="id_topic" value="{% block modal-topic %}{% endblock %}">
+                  <input type="hidden" name="category" id="id_category" value="{% block modal-category %}{% endblock %}">
+                  
                   
                   {% for field in form.visible_fields %}
                       <div class="field">
@@ -118,7 +120,7 @@
                           <button class="button is-link">Отправить</button>
                       </div>
                       <div class="control">
-                          <button type="button" class="button js-close-popup is-text">Закрыть</button>
+                          <button type="button" data-target="contact-popup" class="button js-close-popup is-text">Закрыть</button>
                       </div>
                   </div>
               </form>
@@ -126,8 +128,61 @@
         </div>
     </div>
 
+    <div id="details-popup" class="modal">
+        <div class="modal-content">
+            <div class="modal-header content">
+                <p class="title is-4 has-text-centered has-text-white">Получить информацию</p>
+            </div>
+            <div class="modal-body">
+              <p class="notification has-text-centered">Оставьте свои контакты и с вами свяжется консультант.</p>
+							<form method="POST" id="order-form" class="js-form"  action="{% url 'get_order_form' %}">
+								{% csrf_token %}
+
+								{{ form.non_field_errors }}
+
+								{% for hidden_field in form.hidden_fields %}
+								{{ hidden_field }}
+								{% endfor %}
+
+                {% if item %}
+                <input type="hidden" name="topic" id="id_topic" value="{{ item.title }}">
+                {% endif %}
+
+								<input type="hidden" name="category" id="id_category" value="Комплектующие">
+
+								<div class="field">
+									<label class="label" for="id_name">Имя</label>
+									<div class="control">
+										<input class="input" id="id_name" maxlength="100" name="name" required="" type="text">
+									</div>
+								</div>
+								<div class="field">
+									<label class="label" for="id_phone_details">Телефон</label>
+									<div class="control">
+										<input class="input js-phone-mask" id="id_phone_details" maxlength="100" name="phone" pattern=".{19}" required="" type="text">
+									</div>
+								</div>
+								<div class="field" style="display: none">
+									<label class="label" for="id_note">Примечание</label>
+									<div class="control">
+										<textarea class="textarea" cols="40" id="id_note" maxlength="300" name="note" placeholder="Необязательное поле" rows="1"></textarea>
+									</div>
+								</div> 
+								<div class="field is-grouped">
+									<div class="control">
+										<button class="button is-link">Отправить заявку</button>
+									</div>
+									<div class="control">
+										<button type="button" data-target="details-popup" class="button js-close-popup is-text">Закрыть</button>
+									</div>
+								</div>
+							</form>
+            </div>
+        </div>
+    </div>
 
     <script src="{% static 'js/libs/imask.min.js' %}"></script>
+		<script src="{% static 'js/libs/ScrollTrigger.min.js' %}"></script>
     <script src="{% static 'js/script.js' %}"></script>
 
 

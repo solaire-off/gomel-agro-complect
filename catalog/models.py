@@ -29,6 +29,7 @@ class Item(models.Model):
     class Meta:
         verbose_name = 'Продукт'
         verbose_name_plural = 'Продукты'
+        ordering = ['-created_date']
 
 
 
@@ -57,6 +58,7 @@ class Category(models.Model):
     class Meta:
         verbose_name = 'Категорию'
         verbose_name_plural = 'Категории'
+        ordering = ['-created_date']
 
     def get_absolute_url(self):
         return reverse('items_by_category',
@@ -81,6 +83,7 @@ class Detail(models.Model):
     class Meta:
         verbose_name = "Запчасть"
         verbose_name_plural = "Запчасти"
+        ordering = ['-created_date']
 
     def __str__(self):
         return self.title

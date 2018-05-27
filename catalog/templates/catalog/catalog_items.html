@@ -18,6 +18,7 @@
 {% endblock %}
 
 {% block modal-topic %}Индивидуальный заказ{% endblock %}
+{% block modal-category %}Каталог{% endblock %}
 
 
 {% block content %}
@@ -63,7 +64,7 @@
                                     {% if query_category %}
                                     <a href="{% url "items_list" %}?q={{ query }}" class="button is-outlined is-link">Поиск по всему каталогу</a>
                                     {% else %}
-                                        <a class="button is-outlined is-link js-open-popup">Связаться со специалистом</a>
+                                        <a data-target="contact-popup" class="button is-outlined is-link js-open-popup">Связаться со специалистом</a>
                                     {% endif %}
                                     </p>
                                 </div>

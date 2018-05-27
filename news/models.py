@@ -19,6 +19,7 @@ class Tag(models.Model):
     class Meta:
         verbose_name = 'Метку'
         verbose_name_plural = 'Метки'
+        ordering = ['-created_date']
 
 
     def get_absolute_url(self):
@@ -42,6 +43,7 @@ class News(models.Model):
     class Meta:
         verbose_name = 'Новость'
         verbose_name_plural = 'Новости'
+        ordering = ['-created_date']
 
     def __str__(self):
         return self.title

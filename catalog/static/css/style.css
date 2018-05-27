@@ -55,7 +55,7 @@ html{
 .modal {
     display: none; 
     position: fixed; 
-    z-index: 1; 
+    z-index: 100; 
     padding-top: 100px; 
     left: 0;
     top: 0;
@@ -279,8 +279,7 @@ a.navbar-item:hover{
   margin-left: auto;
   margin-right: auto ;
 }
-.news-card .media-content{
-
+.news-cards .media-content{
   overflow: hidden
 }
 .news-cards iframe{
@@ -296,6 +295,13 @@ a.navbar-item:hover{
 .news-cards .card .card-content .content time{
     position: absolute;
     bottom: 1rem
+}
+.content .title-list{
+  margin-bottom: 0.5rem !important
+}
+.content .details-list{
+  margin-bottom: 1rem;
+  margin-top: 0;
 }
 #block-about,
 #block-contact{
@@ -345,6 +351,35 @@ a.navbar-item:hover{
    margin-left: 4rem;
    margin-right: 4rem;
    margin-bottom: 1rem;
+}
+.toogle-info{
+  display: none;
+}
+.toogle-info + .info{
+  display: none;
+}
+.toogle-info:checked + .info{
+  display: block;
+
+}
+.details .box{
+  position: relative;
+  cursor: pointer;
+}
+.details .box.selected{
+  background: rgba(0,78,148, 0.05);
+}
+.details .box.selected:after{
+  content: " ";
+  position: absolute;
+  top: 0;
+  left: 0;
+  /* border: 1px solid #004e94; */
+  /* background: rgba(0,0,0, 0,1); */
+  border-left: 2px solid rgba(0,78,148,0.5);
+  width: 100%;
+  height: 100%;
+
 }
 @media all and (max-width: 1200px){
 

@@ -282,9 +282,9 @@
           </div>
           <div class="column is-6-desktop form-for-user">
             <h4 class="title is-4 text-center">Форма обращения граждан</h4>
-            <form method="POST" class="columns is-multiline" id="order-form" action="{% url 'get_order_form' %}">
+            <form method="POST" class="js-form js-no-display columns is-multiline" id="order-form" action="{% url 'get_order_form' %}">
               {% csrf_token %}
-              <input id="id_topic" name="topic" value="Обращения граждан" type="hidden">
+              <input id="id_category" name="category" value="Обращения граждан" type="hidden">
 
               <div class="column is-6 field">
                 <label class="label" for="id_name">Имя</label>
@@ -298,9 +298,15 @@
                   <input class="input js-phone-mask" id="id_phone" maxlength="100" name="phone" pattern=".{19}" required="" type="text">
                 </div>
               </div>
+              <div class="column is-12 field">
+                <label class="label" for="id_topic">Тема обращения</label>
+                <div class="control">
+                  <input class="input" id="id_topic" maxlength="100" name="topic" required="" type="text">
+                </div>
+              </div>
               <div class="column is-12">
               <div class="field">
-                <label class="label" for="id_note">Тест обращения</label>
+                <label class="label" for="id_note">Обращения</label>
                 <div class="control">
                   <textarea class="textarea" cols="40" id="id_note" maxlength="300" name="note" rows="5"></textarea>
                 </div>

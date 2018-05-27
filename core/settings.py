@@ -60,6 +60,14 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
 ]
 
+
+APP_ORDER = [
+    'catalog',
+    'service',
+    'orders',
+    'news',
+]
+
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
@@ -169,4 +177,5 @@ CKEDITOR_CONFIGS = {
 CONTROLCENTER_DASHBOARDS = (
         ('orders', 'orders.dashboards.OrderDashboard'),
 )
+CONTROLCENTER_CHARTIST_COLORS = 'material'
 

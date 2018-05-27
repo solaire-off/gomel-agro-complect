@@ -3,6 +3,8 @@
 {% block menu_catalog %}is-active{% endblock %}
 
 {% block modal-topic %}{{ item.title }}{% endblock %}
+{% block modal-category %}Оборудование{% endblock %}
+
 {% block breadcrumb %}
   <nav class="breadcrumb is-centered" aria-label="breadcrumbs">
   <ul>
@@ -28,7 +30,7 @@
                     </figure>
                 </div>
                 <p class="has-text-centered">
-                    <button class="item-order-buttom button js-open-popup is-light">Сделать заказ</button>
+                    <button data-target="contact-popup" class="item-order-buttom button js-open-popup is-light">Узнать подробнее</button>
                 </p>
             </div>
             <div class="column ">
@@ -38,20 +40,30 @@
                             <div class="content">
                             <h1 class="item-title title is-3">{{ item.title  }}</h1> <br/>{{ item.description | safe }}</div>
                         </div>
-                </article>
+                  </article>
                 </div>
             </div>
         </div>
         {% if details %}
-        <div class="columns">
-            <div class="column is-offset-3-tablet is-offset-2-desktop">
+        <div class="columns is-multiline">
+						<div class="column is-12">
                 <div class="content">
                     <p class="subtitle is-4 has-text-centered">Комплектующие</p>
                 </div>
+						</div>
+            <div class="column is-3-tabler is-4-desktop">
+                <div class="has-text-centered">
+                    <div class=" content">
+                      <blockquote class="notification">Для получения информации о комплектующих выберите их из списка и нажмите на кнопку получить информацию </blockquote>
+                      <button data-target="details-popup" class="details-order-buttom js-open-popup button is-info">Получить информацию.</button>
+                    </div>
+                </div>
+            </div>
+            <div class="column">
                 <div class="columns is-multiline  details">
                     {% for detail in details %}
                     <div class="column is-4-desktop is-6-tablet">
-                        <div class="box">
+                      <div class="box box-link" data-title="{{ detail.title }}">
                             <div class="media">
                                 <div class="media-left">
                                     <figure class="image is-3by4">
@@ -71,5 +83,8 @@
         {% endif %}
     </div>
 </section>
+
+
+  
 
 {% endblock %}

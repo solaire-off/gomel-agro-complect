@@ -4,8 +4,8 @@ from .views import export_orders_as_xls
 
 class OrderAdmin(admin.ModelAdmin):
     models = Order
-    list_display = ('name','phone','topic','processed','created_date')
-    list_filter = ('processed', 'created_date')
+    list_display = ('name','phone','category','topic','processed','created_date')
+    list_filter = ('processed', 'category', 'created_date')
     list_editable = ['processed']
     search_fields = ['name','phone','note']
     actions = [export_orders_as_xls]

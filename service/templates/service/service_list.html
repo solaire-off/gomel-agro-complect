@@ -17,9 +17,11 @@
 
 {% block modal-topic %}{% if selected_category %}{{ selected_category.title }}{% else %}Услуги{% endif %}{% endblock %}
 
+{% block modal-category %}Услуги{% endblock %}
+
 {% block navbar-end %}
 <div class="navbar-item">
-      <a class="button js-open-popup">
+      <a data-target="contact-popup" class="button js-open-popup">
         <span class="icon">
           <i class="fa fa-phone" aria-hidden="true"></i>
         </span>

@@ -28,6 +28,7 @@ class Category(models.Model):
     class Meta:
         verbose_name = 'Тип услуги'
         verbose_name_plural = 'Типы услуг'
+        ordering = ['-created_date']
 
 
     def get_absolute_url(self):
@@ -62,6 +63,7 @@ class Service(models.Model):
     class Meta:
         verbose_name = 'Услуга'
         verbose_name_plural = 'Услуги'
+        ordering = ['-created_date']
 
     def save(self, *args, **kwargs):
         if isBlank(self.url):
