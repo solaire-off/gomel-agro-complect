@@ -36,7 +36,8 @@ def export_orders_as_xls(modeladmin, request, queryset):
     font_style.font.bold = True
 
 
-    columns = ['Имя', 'Телефон','Примечание','Тема','Принята','Дата']
+    columns = ['Имя', 'Телефон','Категория','Тема','Примечание','Принята','Дата']
+
 
     for col_num in range(len(columns)):
         ws.write(row_num, col_num, columns[col_num], font_style)
@@ -52,7 +53,7 @@ def export_orders_as_xls(modeladmin, request, queryset):
 
     font_style.alignment = alignment
 
-    max_col_width = [15,15,30,30,10,15]
+    max_col_width = [15,15,25,30,30,10,15]
 
     for obj in queryset:
         row_num += 1
@@ -64,19 +65,26 @@ def export_orders_as_xls(modeladmin, request, queryset):
 
         note = obj.note
         if obj.note is None:
-            note = 'Отсутствует'
+            note = '-'
+
 
         ws.write(row_num, 0, obj.name, font_style)
         ws.write(row_num, 1, obj.phone, font_style)
-        ws.write(row_num, 2, note, font_style)
+        ws.write(row_num, 2, obj.category, font_style)
         ws.write(row_num, 3, obj.topic, font_style)
-        ws.write(row_num, 4, processed, font_style)
-        ws.write(row_num, 5, local_datetime, font_style)
+        ws.write(row_num, 4, note, font_style)
+        ws.write(row_num, 5, processed, font_style)
+        ws.write(row_num, 6, local_datetime, font_style)
 
-        if len(note) > 29 :
-            note_hight = round(len(note) / 30)
-            ws.row(row_num).height_mismatch = True
-            ws.row(row_num).height = 265 * (note_hight)
+
+        len_cols = [len(obj.note), len(obj.category), len(obj.name)]
+        max_len_col = max(len_cols)
+
+
+
+        field_hight = round(max_len_col / 30)
+        ws.row(row_num).height_mismatch = True
+        ws.row(row_num).height = 265 * (field_hight)
 
     for col_num in range(len(max_col_width)):
         ws.col(col_num).width = (max_col_width[col_num]+1) * 280

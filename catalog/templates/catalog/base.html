@@ -1,190 +1,204 @@
 {% load staticfiles %}
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <link rel="shortcut icon" href="{% static 'img/favicon.ico' %}" type="image/x-icon">
-        <link rel="icon" href="{% static 'img/favicon.ico' %}" type="image/x-icon">
-        <title>{% block title %}{% endblock %}</title>
-        <link rel="stylesheet" href="{% static 'css/libs/bulma.min.css' %}">
-        <link rel="stylesheet" href="{% static 'css/libs/hint.css' %}">
-        <link rel="stylesheet" href="{% static 'css/style.css' %}">
-		<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
-    </head>
-<body>
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="shortcut icon" href="{% static 'img/favicon.ico' %}" type="image/x-icon">
+    <link rel="icon" href="{% static 'img/favicon.ico' %}" type="image/x-icon">
+    <title>{% block title %}{% endblock %}</title>
+    <link rel="stylesheet" href="{% static 'css/libs/bulma.min.css' %}">
+    <link rel="stylesheet" href="{% static 'css/libs/hint.css' %}">
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+  </head>
+  <body>
     <nav class="navbar has-shadow">
-        <div class="container">
-            <div class="navbar-tabs">
-                <a id="js-arrow" class="navbar-item is-tab js-arrow{% block menu_main %}{% endblock %}" href="{% url 'home_page' %}">
-<svg width="16" height="15" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path d="M257.5 445.1l-22.2 22.2c-9.4 9.4-24.6 9.4-33.9 0L7 273c-9.4-9.4-9.4-24.6 0-33.9L201.4 44.7c9.4-9.4 24.6-9.4 33.9 0l22.2 22.2c9.5 9.5 9.3 25-.4 34.3L136.6 216H424c13.3 0 24 10.7 24 24v32c0 13.3-10.7 24-24 24H136.6l120.5 114.8c9.8 9.3 10 24.8.4 34.3z"/></svg>
-</a>
-                <a class="navbar-item is-tab {% block menu_news %}{% endblock %}" href="{% url 'news_list' %}">Новости</a>
-                <a class="navbar-item is-tab {% block menu_catalog %}{% endblock %}" href="{% url 'items_list' %}">Продукция</a>
-                <a class="navbar-item is-tab {% block menu_service %}{% endblock %}" href="{% url 'service_list' %}">Услуги</a>
-                {% if request.user.is_superuser %}
-                <a class="navbar-item is-tab" href="{% url 'admin:index' %}"><i class="fa fa-lock"></i></a>
-                {% endif %}
-                <a href="{% url 'home_page' %}" class="navbar-item is-tab navbar-center-logo hint--bottom" aria-label="ОАО &laquo;Гомельагрокомплект&raquo;" >
-                     <img src="{% static 'img/logo.png' %}" alt="Логотип ОАО Гомельагрокоплект" />
-                </a>
+      <div class="container">
+        <div class="navbar-brand is-hidden-desktop">
+          <a href="{% url 'home_page' %}" class="navbar-item is-tab navbar-center-logo  hint--right " aria-label="ОАО &laquo;Гомельагрокомплект&raquo;" >
+            <img src="{% static 'img/logo.png' %}" alt="Логотип ОАО Гомельагрокоплект" />
+          </a>
+            <div class="navbar-item navbar-brand-caption">
+              <p>ОАО &laquo;Гомельагрокомплект&raquo;</p>
             </div>
 
-
-            <!--  navbar-right end -->
-            <div class="navbar-end">
-              {% block navbar-end %}
-                <div class="navbar-item">
-                <form action="{% url 'items_list' %}" method="GET">
-                    <div class="field is-grouped">
-                        <div class="field is-horizontal">
-                            <div class="field-label is-normal">
-                                <label class="label">Поиск</label>
-                            </div>
-                            <div class="field-body">
-                                <div class="field has-addons">
-                                    <p class="control">
-                                    <input required class="input" type="text" name="q" {% if query %} value="{{ query}}" {% endif %}  placeholder="Например, МКП-600">
-                                    {% if query_category %}
-                                    <input type="hidden" name="category" value="{{ query_category.url }}">
-                                    {% elif selected_category %}
-                                    <input type="hidden" name="category" value="{{ selected_category.url }}">
-                                    {% endif %}
-                                    </p>
-                                    <div class="control">
-                                        {% if query %}
-                                        <a href="{% url 'items_list' %}" class="button is-danger">
-                                            Сброс
-                                        </a>
-                                        {% else %}
-                                        <button class="button is-info">
-                                            Искать
-                                        </button>
-                                        {% endif %}
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </form>
-                </div>
-                {% endblock %}
-            </div>
-            <!--  navbar-right end -->
+            <div class="navbar-burger burger" data-target="navbar-menu">
+              <span></span>
+              <span></span>
+              <span></span>
+            </div>  
         </div>
+
+
+        <div id="navbar-menu" class="navbar-tabs navbar-menu">
+          <a id="js-arrow" class="navbar-item is-tab js-arrow is-hidden-touch {% block menu_main %}{% endblock %}" href="{% url 'home_page' %}">
+            <svg width="16" height="15" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path d="M257.5 445.1l-22.2 22.2c-9.4 9.4-24.6 9.4-33.9 0L7 273c-9.4-9.4-9.4-24.6 0-33.9L201.4 44.7c9.4-9.4 24.6-9.4 33.9 0l22.2 22.2c9.5 9.5 9.3 25-.4 34.3L136.6 216H424c13.3 0 24 10.7 24 24v32c0 13.3-10.7 24-24 24H136.6l120.5 114.8c9.8 9.3 10 24.8.4 34.3z"/></svg>
+          </a>
+          <a class="navbar-item is-tab {% block menu_news %}{% endblock %}" href="{% url 'news_list' %}">Новости</a>
+          <a class="navbar-item is-tab {% block menu_catalog %}{% endblock %}" href="{% url 'items_list' %}">Продукция</a>
+          <a class="navbar-item is-tab {% block menu_service %}{% endblock %}" href="{% url 'service_list' %}">Услуги</a>
+          {% if request.user.is_superuser %}
+          <a class="navbar-item is-tab" href="{% url 'admin:index' %}"><i class="fa fa-lock is-hidden-touch"></i> <span class="is-hidden-desktop">Панель администрации</span></a>
+          {% endif %}
+          <a href="{% url 'home_page' %}" class="navbar-item is-tab navbar-center-logo is-hidden-touch  hint--bottom" aria-label="ОАО &laquo;Гомельагрокомплект&raquo;" >
+            <img src="{% static 'img/logo.png' %}" alt="Логотип ОАО Гомельагрокоплект" />
+          </a>               
+            <div class="navbar-end is-visible">
+              {% block navbar-end %}
+              <div class="navbar-item">
+                <form action="{% url 'items_list' %}" method="GET">
+                  <div class="field is-grouped">
+                    <div class="field is-horizontal">
+                      <div class="field-label is-normal">
+                        <label class="label">Поиск</label>
+                      </div>
+                      <div class="field-body">
+                        <div class="field has-addons">
+                          <p class="control">
+                          <input required class="input" type="text" name="q" {% if query %} value="{{ query}}" {% endif %}  placeholder="Например, МКП-600">
+                          {% if query_category %}
+                          <input type="hidden" name="category" value="{{ query_category.url }}">
+                          {% elif selected_category %}
+                          <input type="hidden" name="category" value="{{ selected_category.url }}">
+                          {% endif %}
+                          </p>
+                          <div class="control">
+                            {% if query %}
+                            <a href="{% url 'items_list' %}" class="button is-danger">
+                              Сброс
+                            </a>
+                            {% else %}
+                            <button class="button is-info">
+                              Искать
+                            </button>
+                            {% endif %}
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </form>
+              </div>
+              {% endblock %}
+            </div>
+        </div>
+
+
+      </div>
     </nav>
     <div class="notification" style="margin-top: 2px; padding-top: 4.6875rem">
-        <div class="container">
-            {% block breadcrumb %}
-            {% endblock %}
-        </div>
+      <div class="container">
+        {% block breadcrumb %}
+        {% endblock %}
+      </div>
     </div>
-    
+
     {% block content %}
     {% endblock %}
 
     {% include 'footer.html' %}
-    
+
     <div id="contact-popup" class="modal">
-        <div class="modal-content">
-            <div class="modal-header content">
-                <p class="title is-4 has-text-centered has-text-white">Отправить заявку</p>
-            </div>
-            <div class="modal-body">
-              <form method="POST" id="order-form" class="js-form" action="{% url 'get_order_form' %}">
-                  {% csrf_token %}
-
-                  {{ form.non_field_errors }}
-
-                  {% for hidden_field in form.hidden_fields %}
-                      {{ hidden_field }}
-                  {% endfor %}
-
-                  <input type="hidden" name="topic" id="id_topic" value="{% block modal-topic %}{% endblock %}">
-                  <input type="hidden" name="category" id="id_category" value="{% block modal-category %}{% endblock %}">
-                  
-                  
-                  {% for field in form.visible_fields %}
-                      <div class="field">
-                          <label class="label" for="id_{{ field.name }}">{{ field.label }}</label>
-                          <div class="control">
-                              {{ field  }}
-                          </div>
-                          {% if field.help_text %}
-                          <p class="help">{{ field.help_text | safe }}</p>
-                          {% endif %}
-                      </div>
-                  {% endfor %}
-                  <div class="field is-grouped">
-                      <div class="control">
-                          <button class="button is-link">Отправить</button>
-                      </div>
-                      <div class="control">
-                          <button type="button" data-target="contact-popup" class="button js-close-popup is-text">Закрыть</button>
-                      </div>
-                  </div>
-              </form>
-            </div>
+      <div class="modal-content">
+        <div class="modal-header content">
+          <p class="title is-4 has-text-centered has-text-white">Отправить заявку</p>
         </div>
+        <div class="modal-body">
+          <form method="POST" id="order-form" class="js-form" action="{% url 'get_order_form' %}">
+            {% csrf_token %}
+
+            {{ form.non_field_errors }}
+
+            {% for hidden_field in form.hidden_fields %}
+            {{ hidden_field }}
+            {% endfor %}
+
+            <input type="hidden" name="topic" id="id_topic" value="{% block modal-topic %}{% endblock %}">
+            <input type="hidden" name="category" id="id_category" value="{% block modal-category %}{% endblock %}">
+
+
+            {% for field in form.visible_fields %}
+            <div class="field">
+              <label class="label" for="id_{{ field.name }}">{{ field.label }}</label>
+              <div class="control">
+                {{ field  }}
+              </div>
+              {% if field.help_text %}
+              <p class="help">{{ field.help_text | safe }}</p>
+              {% endif %}
+            </div>
+            {% endfor %}
+            <div class="field is-grouped">
+              <div class="control">
+                <button class="button is-link">Отправить</button>
+              </div>
+              <div class="control">
+                <button type="button" data-target="contact-popup" class="button js-close-popup is-text">Закрыть</button>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
     </div>
 
     <div id="details-popup" class="modal">
-        <div class="modal-content">
-            <div class="modal-header content">
-                <p class="title is-4 has-text-centered has-text-white">Получить информацию</p>
-            </div>
-            <div class="modal-body">
-              <p class="notification has-text-centered">Оставьте свои контакты и с вами свяжется консультант.</p>
-							<form method="POST" id="order-form" class="js-form"  action="{% url 'get_order_form' %}">
-								{% csrf_token %}
-
-								{{ form.non_field_errors }}
-
-								{% for hidden_field in form.hidden_fields %}
-								{{ hidden_field }}
-								{% endfor %}
-
-                {% if item %}
-                <input type="hidden" name="topic" id="id_topic" value="{{ item.title }}">
-                {% endif %}
-
-								<input type="hidden" name="category" id="id_category" value="Комплектующие">
-
-								<div class="field">
-									<label class="label" for="id_name">Имя</label>
-									<div class="control">
-										<input class="input" id="id_name" maxlength="100" name="name" required="" type="text">
-									</div>
-								</div>
-								<div class="field">
-									<label class="label" for="id_phone_details">Телефон</label>
-									<div class="control">
-										<input class="input js-phone-mask" id="id_phone_details" maxlength="100" name="phone" pattern=".{19}" required="" type="text">
-									</div>
-								</div>
-								<div class="field" style="display: none">
-									<label class="label" for="id_note">Примечание</label>
-									<div class="control">
-										<textarea class="textarea" cols="40" id="id_note" maxlength="300" name="note" placeholder="Необязательное поле" rows="1"></textarea>
-									</div>
-								</div> 
-								<div class="field is-grouped">
-									<div class="control">
-										<button class="button is-link">Отправить заявку</button>
-									</div>
-									<div class="control">
-										<button type="button" data-target="details-popup" class="button js-close-popup is-text">Закрыть</button>
-									</div>
-								</div>
-							</form>
-            </div>
+      <div class="modal-content">
+        <div class="modal-header content">
+          <p class="title is-4 has-text-centered has-text-white">Получить информацию</p>
         </div>
+        <div class="modal-body">
+          <p class="notification has-text-centered">Оставьте свои контакты и с вами свяжется консультант.</p>
+          <form method="POST" id="order-form" class="js-form"  action="{% url 'get_order_form' %}">
+            {% csrf_token %}
+
+            {{ form.non_field_errors }}
+
+            {% for hidden_field in form.hidden_fields %}
+            {{ hidden_field }}
+            {% endfor %}
+
+            {% if item %}
+            <input type="hidden" name="topic" id="id_topic" value="{{ item.title }}">
+            {% endif %}
+
+            <input type="hidden" name="category" id="id_category" value="Комплектующие">
+
+            <div class="field">
+              <label class="label" for="id_name">Имя</label>
+              <div class="control">
+                <input class="input" id="id_name" maxlength="100" name="name" required="" type="text">
+              </div>
+            </div>
+            <div class="field">
+              <label class="label" for="id_phone_details">Телефон</label>
+              <div class="control">
+                <input class="input js-phone-mask" id="id_phone_details" maxlength="100" name="phone" pattern=".{19}" required="" type="text">
+              </div>
+            </div>
+            <div class="field" style="display: none">
+              <label class="label" for="id_note">Примечание</label>
+              <div class="control">
+                <textarea class="textarea" cols="40" id="id_note" maxlength="300" name="note" placeholder="Необязательное поле" rows="1"></textarea>
+              </div>
+            </div> 
+            <div class="field is-grouped">
+              <div class="control">
+                <button class="button is-link">Отправить заявку</button>
+              </div>
+              <div class="control">
+                <button type="button" data-target="details-popup" class="button js-close-popup is-text">Закрыть</button>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
     </div>
 
     <script src="{% static 'js/libs/imask.min.js' %}"></script>
-		<script src="{% static 'js/libs/ScrollTrigger.min.js' %}"></script>
+    <script src="{% static 'js/libs/ScrollTrigger.min.js' %}"></script>
     <script src="{% static 'js/script.js' %}"></script>
 
 
-</body>
+  </body>
 </html>

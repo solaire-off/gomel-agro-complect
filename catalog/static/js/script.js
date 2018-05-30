@@ -41,6 +41,35 @@ document.addEventListener("DOMContentLoaded", function() {
 
   }
 
+
+
+	 $navbarBurgers = Array.prototype.slice.call(document.querySelectorAll('.navbar-burger'), 0);
+
+		if ($navbarBurgers.length > 0) {
+			$navbarBurgers.forEach(function ($el) {
+				$el.addEventListener('click', function () {
+
+          $jsNavbar = document.getElementById('js-navbar');
+          if ($jsNavbar){
+            toggleClass($jsNavbar, 'has-open-hamburger');
+            if (!hasClass($jsNavbar,'has-shadow')){
+              toggleClass($jsNavbar,'is-transparent')
+            }
+          }
+
+					target = $el.dataset.target;
+					$target = document.getElementById(target);
+
+					$el.classList.toggle('is-active');
+					$target.classList.toggle('is-active');
+
+				});
+			});
+		}
+
+
+
+
   $html         = document.getElementsByTagName('html')[0];
   $popupToggle  = document.querySelectorAll('.js-open-popup');
   $contactPopup = document.getElementById('contact-popup')
@@ -243,11 +272,6 @@ document.addEventListener("DOMContentLoaded", function() {
 
   }
 
-
-
-
-
-
   var trigger = new ScrollTrigger({
     toggle: {
       visible: 'js-visible',
@@ -255,7 +279,7 @@ document.addEventListener("DOMContentLoaded", function() {
     },
     offset: {
       x: 0,
-      y: -350
+      y: -550
     },
     addHeight: true,
     // centerVertical: true,

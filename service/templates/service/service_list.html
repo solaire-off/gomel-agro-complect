@@ -55,7 +55,7 @@
       {% if service %}
       <div class="service column is-9">
       {% for item in service %}
-				<a class="box box-link" href="{{ item.get_absolute_url }}" >
+				<a class="box box-link is-resposive" href="{{ item.get_absolute_url }}" >
 					<article class="media">
 						<div class="media-left">
 							<figure class="image service-image">
@@ -95,7 +95,7 @@
       {% else %}
       <div class="service column is-9">
       {% for item in category %}
-				<a class="box box-link" href="{{ item.get_absolute_url }}" >
+				<a class="box box-link is-resposive" href="{{ item.get_absolute_url }}" >
 					<article class="media">
             {% if item.image %}
 						<div class="media-left">

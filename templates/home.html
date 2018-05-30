@@ -16,7 +16,21 @@
 	<body class="home-page">
 		<nav id='js-navbar' class="navbar is-transparent">
 			<div class="container">
-				<div class="navbar-tabs">
+<div class="navbar-brand is-hidden-desktop">
+          <a href="{% url 'home_page' %}" class="navbar-item no-hover is-tab" >
+            <img src="{% static 'img/logo.png' %}" alt="Логотип ОАО Гомельагрокоплект" />
+          </a>
+            <div class="navbar-item navbar-brand-caption">
+              <p>ОАО &laquo;Гомельагрокомплект&raquo;</p>
+            </div>
+
+            <div class="navbar-burger burger" data-target="main-menu">
+              <span></span>
+              <span></span>
+              <span></span>
+            </div>  
+        </div>
+				<div class="navbar-tabs navbar-menu" id="main-menu">
 					<a class="navbar-item is-tab" href="#block-about">О предприятии</a>
 					<a class="navbar-item is-tab" href="{% url 'news_list' %}">Новости</a>
 					<a class="navbar-item is-tab" href="{% url 'items_list' %}">Продукция</a>
