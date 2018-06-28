@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'orders',
     'news',
     'service',
+    'landing',
 
     # Plugins
     'ckeditor',
@@ -66,6 +67,7 @@ APP_ORDER = [
     'service',
     'orders',
     'news',
+    'landing',
 ]
 
 MIDDLEWARE = [

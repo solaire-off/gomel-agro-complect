@@ -17,7 +17,7 @@
     padding: 8px 35px;
     }
 body:not(.app-orders) .app-orders{
-    /*display: none*/
+    display: none
 }
 </style>
 {% endblock %}
@@ -29,14 +29,7 @@ body:not(.app-orders) .app-orders{
 {% block breadcrumbs %}{% endblock %}
 
 {% block content %}
-{% if app_list %}
 <div id="content-main">
-        <div class="app-none module admin-menu">
-        <a class="section" href="/admin/dashboard/orders/">Доска заявок</a>
-        <a class="section" href="{% url 'export_catalog_xls' %}">Экспорт каталога</a>
-        <a class="section" href="{% url 'export_users_xls' %}">Экспорт пользователей</a>
-        </div>
-{% endif %}
  
 {% if app_list %}
     {% for app in app_list|sort_apps %}
@@ -78,10 +71,17 @@ body:not(.app-orders) .app-orders{
 {% block sidebar %}
 <div id="content-related">
     <div class="module" id="recent-actions-module">
-        <h2>{% trans 'Recent actions' %}</h2>
-        <h3>{% trans 'My actions' %}</h3>
+        <h2>Работа с сайтом</h2>
+        <h3>Функции</h3>
+        <ul class="actionlist">
+          <li class="changelink"><a href="/admin/dashboard/orders/">Доска заявок</a></li>
+          <li class="changelink"><a href="/admin/orders/order/">Редактор заявок</a></li>
+          <li class="changelink"><a href="{% url 'export_catalog_xls' %}">Экспорт каталога</a></li>
+          <li class="changelink"><a href="{% url 'export_users_xls' %}">Экспорт пользователей</a></li>
+        </ul>
+        <h3>Последние действия</h3>
             {% load log %}
-            {% get_admin_log 10 as admin_log for_user user %}
+            {% get_admin_log 5 as admin_log for_user user %}
             {% if not admin_log %}
             <p>{% trans 'None available' %}</p>
             {% else %}
@@ -105,4 +105,5 @@ body:not(.app-orders) .app-orders{
             {% endif %}
     </div>
 </div>
+
 {% endblock %}

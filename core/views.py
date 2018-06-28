@@ -5,15 +5,33 @@ from catalog.models import Detail, Item, Category
 from news.models import News
 from orders.forms import OrderForm
 import xlwt
+from landing.models import TextBlock, ImageItem
+def get_or_none(classmodel, **kwargs):
+    try:
+        return classmodel.objects.get(**kwargs)
+    except classmodel.DoesNotExist:
+        return None
 
 def home_page(request):
     news = News.objects.filter(published=True).order_by('-created_date')
     category = Category.objects.filter(published=True).order_by('-created_date')
+    images_about = ImageItem.objects.filter(identifier='about')
+    images_friends = ImageItem.objects.filter(identifier='friends')
+    title_text = get_or_none(TextBlock,identifier='title')
+    subtitle_text = get_or_none(TextBlock,identifier='subtitle')
+    about_text = get_or_none(TextBlock,identifier='about')
+    contact_text = get_or_none(TextBlock,identifier='contact')
     order_form = OrderForm
     context = {
             'news' : news,
             'category' : category,
             'form' : order_form,
+            'images_about' : images_about,
+            'images_friends' : images_friends,
+            'title_text' : title_text,
+            'subtitle_text' : subtitle_text,
+            'about_text' : about_text,
+            'contact_text' : contact_text,
             }
     return render(request, 'home.html', context)
 

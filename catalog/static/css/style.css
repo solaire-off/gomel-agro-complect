@@ -14,6 +14,16 @@ html{
     background-position-y: 10%;
     background-repeat: no-repeat;
 }
+#block-friends img{
+  padding-right: 0.625rem;
+  padding-left: 0.625rem;
+  height: 100%;
+  object-fit: cover;
+  width: 100%;
+}
+.tns-horizontal.tns-subpixel > .tns-item {
+          vertical-align: middle !important
+    }
 .image img{
     width:100%;
     height:100%;
@@ -396,14 +406,22 @@ a.navbar-item:hover{
 .has-open-hamburger .navbar-item{
   color: #4a4a4a !important
 }
+.carousel .carousel-container .carousel-item.has-background .is-background{
+  height: 31rem;
+}
 @media all and (max-width: 1200px){
 
   html{
     font-size: 14px
   }
 
+  .carousel .carousel-container .carousel-item.has-background .is-background{
+    height: 35rem;
+  }
+
 }
 @media all and (max-width: 1023px){
+
   .home-page .navbar-brand .navbar-item,
   .home-page .navbar-tabs .navbar-item{
     display: inline-flex;
@@ -470,6 +488,9 @@ a.navbar-item:hover{
 }
 @media all and (max-width: 480px){
 
+  .carousel .carousel-container .carousel-item.has-background .is-background{
+    height: 20rem;
+  }
 
   html{
     /* font-size: 11px */
@@ -504,5 +525,9 @@ a.navbar-item:hover{
     height: 10rem;
     max-width: none
 
+  }
+
+  .carousel .carousel-container .carousel-item.has-background .is-background{
+    height: 15rem;
   }
 }
