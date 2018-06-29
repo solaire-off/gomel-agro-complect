@@ -24,7 +24,7 @@ class OrderItemList(widgets.ItemList):
     empty_message = "Заявки отсутствуют"
 
     def get_queryset(self):
-        return Order.objects.filter(processed=False).order_by('-created_date')
+        return Order.objects.filter(processed=False, created_date__gte=one_week_ago).order_by('-created_date')
 
     def ago(self, obj):
         return localize(obj.created_date.astimezone(server_timezone))
@@ -46,7 +46,7 @@ class OrderItemList(widgets.ItemList):
 
 class OrderSingleBarChart(widgets.SingleBarChart):
     # Строит бар-чарт по числу заказов
-    title = 'Статистика по темам отзывов за неделю'
+    title = 'Статистика по темам'
     model = Order
 
     width = widgets.LARGE
@@ -72,7 +72,9 @@ class OrderSingleBarChart(widgets.SingleBarChart):
         queryset = self.get_queryset()
         return (queryset.values_list('category')
                         .annotate(baked=Count('category'))
-                        .order_by('-baked'))
+                        .order_by('-baked')
+                        .filter(created_date__gte=one_week_ago))
+
 
 
 class OrderSingleLineChart(widgets.SingleLineChart):
@@ -108,7 +110,8 @@ class OrderSingleLineChart(widgets.SingleLineChart):
                         .values('date')
                         .annotate(count = Count('id'))
                         .values_list('date', 'count')
-                        .order_by('-date'))
+                        .order_by('-date')
+                        .filter(created_date__gte=one_week_ago))
 
 
 class OrderDashboard(Dashboard):

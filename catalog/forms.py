@@ -33,7 +33,7 @@ class ItemAdminForm(forms.ModelForm):
 
 
 class CategoryAdminForm(forms.ModelForm):
-    description = forms.CharField(required=False, widget=CKEditorUploadingWidget(), label="Описание")
+    # description = forms.CharField(required=False, widget=CKEditorUploadingWidget(), label="Описание")
 
     class Meta:
         model = Category

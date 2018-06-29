@@ -8,8 +8,6 @@
     <link rel="shortcut icon" href="{% static 'img/favicon.ico' %}" type="image/x-icon">
     <link rel="icon" href="{% static 'img/favicon.ico' %}" type="image/x-icon">
     <link rel="stylesheet" href="{% static 'css/libs/bulma.min.css' %}">
-    <link rel="stylesheet" href="{% static 'css/libs/bulma-carousel.min.css' %}">
-    <link rel="stylesheet" href="{% static 'css/libs/bulma-timeline.min.css' %}">
     <link rel="stylesheet" href="{% static 'css/style.css' %}">
     <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
 
@@ -72,28 +70,16 @@
       <div class="container">
         <h2 class="section-title title" >О предприятии</h2>
         <div class="columns">
-          <div class="column is-6" style="display: flex; justify-content: center; align-items: center;">
+          <div class="column is-6" >
             {% if images_about.count > 1 %}
-            <div class='carousel carousel-animated carousel-animate-slide' data-autoplay="true" data-delay="7000">
-              <div class='carousel-container'>
+              <div class='carousel-container-1'>
                 {% for image in images_about %}
-                <div class='carousel-item'>
-                  <div class='carousel-item has-background'>
-                    <img class="is-background" src="{{ image.source.url }}" alt="" width="640" height="310" >
-                    <div class="title">{{ image.description }}</div>
-                  </div>
+                <div class="custom-figure">
+                    <img class="is-background" src="{{ image.source.url }}" alt=""  >
+                    <p class="caption">{{ image.description }}</p>
                 </div>
                 {% endfor %}
               </div>
-              <div class="carousel-navigation is-overlay">
-                <div class="carousel-nav-left">
-                  <i class="fa fa-chevron-left" aria-hidden="true"></i>
-                </div>
-                <div class="carousel-nav-right">
-                  <i class="fa fa-chevron-right" aria-hidden="true"></i>
-                </div>
-              </div>
-            </div>
             {% else %}
               <p>Изображений с группой 'about' не найдено. Для работы галереи необходимо минимум два изображения</p>
             {% endif %}
@@ -239,10 +225,20 @@
 
 
     <script src="{% static 'js/libs/imask.min.js' %}"></script>
-    <script src="{% static 'js/libs/bulma-carousel.min.js' %}"></script>
-    <script src="{% static 'js/libs/ScrollTrigger.min.js' %}"></script>
+    <!-- <script src="{% static 'js/libs/ScrollTrigger.min.js' %}"></script> -->
     <script src="{% static 'js/script.js' %}"></script>
     <script>
+    var about_slider = tns({
+      container: '.carousel-container-1',
+      items: 1,
+      slideBy: 1,
+      controls: false,
+      autoplay: true,
+      nav: false,
+      speed: 500,
+      autoplayButtonOutput: false,
+      autoplayTimeout: 7500,
+    });
     var slider = tns({
       container: '.carousel-container-2',
       items: 1,
@@ -252,7 +248,7 @@
       nav: false,
       speed: 500,
       autoplayButtonOutput: false,
-      loop: false,
+      loop: true,
       responsive: {
         540: {
           items: 1

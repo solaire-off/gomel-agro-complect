@@ -19,7 +19,7 @@ class ServiceAdmin(admin.ModelAdmin):
 
 class CategoryAdmin(admin.ModelAdmin):
     models = Category
-    inlines = [CategoryImageInline,]
+    # inlines = [CategoryImageInline,]
     list_display = ('title','url','published','created_date')
     list_filter = ('created_date',)
     list_editable = ["published"]

@@ -21,7 +21,7 @@ html{
   object-fit: cover;
   width: 100%;
 }
-.tns-horizontal.tns-subpixel > .tns-item {
+.carousel-container-2.tns-horizontal.tns-subpixel > .tns-item {
           vertical-align: middle !important
     }
 .image img{
@@ -406,8 +406,27 @@ a.navbar-item:hover{
 .has-open-hamburger .navbar-item{
   color: #4a4a4a !important
 }
-.carousel .carousel-container .carousel-item.has-background .is-background{
+.is-background{
   height: 31rem;
+  object-fit: cover;
+  width: 100%;
+}
+.custom-figure{
+  position: relative;
+}
+.is-background + .caption{
+position: absolute;
+left: 0;
+right: 0;
+bottom: 0;
+padding: 1.5em;
+margin: 0;
+text-align: center;
+background: rgba(255,255,255,.6);
+font-size: .75rem;
+color: #363636;
+font-weight: 600;
+line-height: 1.125;
 }
 @media all and (max-width: 1200px){
 
@@ -415,7 +434,7 @@ a.navbar-item:hover{
     font-size: 14px
   }
 
-  .carousel .carousel-container .carousel-item.has-background .is-background{
+  .is-background{
     height: 35rem;
   }
 
@@ -488,7 +507,7 @@ a.navbar-item:hover{
 }
 @media all and (max-width: 480px){
 
-  .carousel .carousel-container .carousel-item.has-background .is-background{
+  .is-background{
     height: 20rem;
   }
 
@@ -527,7 +546,9 @@ a.navbar-item:hover{
 
   }
 
-  .carousel .carousel-container .carousel-item.has-background .is-background{
+  .is-background{
     height: 15rem;
+    width: 100%;
+
   }
 }
